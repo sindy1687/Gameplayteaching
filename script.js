@@ -4528,10 +4528,14 @@ SpeechSynthesis
 
 這一步要做什麼：
 
-把你剛剛生成的可愛背景圖片，正式套用到英打闖關遊戲裡。
+把指定的背景圖片正式套用到英打闖關遊戲裡。
 
-這次要做的是：
-把我選好的背景圖，套用到目前的遊戲畫面中，讓整個網站看起來更可愛、更完整。
+這次只做一件事：
+把背景圖片改成下面這個網址，並套用到目前的遊戲畫面中。
+
+背景圖片網址：
+
+https://i.pinimg.com/736x/fb/2e/44/fb2e442982a05626a875b602da6b916f.jpg
 
 請不要重建專案。
 請不要刪除原本功能。
@@ -4551,28 +4555,23 @@ typing-level-game/
 └── images/
     └── background.png
 
-如果 images 資料夾還沒有建立，請幫我建立。
-
 ==================================================
-一、背景圖片檔案位置
+一、背景圖片套用方式
 ==================================================
 
-請提醒我把背景圖片放到：
+這次背景圖片請直接使用網路圖片網址：
 
-images/background.png
+https://i.pinimg.com/736x/fb/2e/44/fb2e442982a05626a875b602da6b916f.jpg
 
-如果我目前的背景檔案名稱不是 background.png，
-請幫我統一改成比較穩定的英文檔名：
-
-background.png
+請在 style.css 裡把原本的背景圖片改成這個網址。
 
 注意：
 
 1. 不要直接使用 C 槽絕對路徑。
-2. 網頁要使用相對路徑：
-   images/background.png
-3. 請不要使用太長或中文檔名當正式套用檔名，避免部署後讀取問題。
-4. 如果目前已經有其他背景圖，請改成新的這張。
+2. 不要刪除 images 資料夾。
+3. 如果原本使用 images/background.png，請改成使用上面的網址。
+4. 不要修改其他功能。
+5. 不要重建整個專案。
 
 ==================================================
 二、套用範圍
@@ -4580,10 +4579,7 @@ background.png
 
 我要把這張背景圖套用在整個網站主畫面。
 
-請優先套用到：
-
-1. body
-2. 或主要外層容器
+請優先套用到 body。
 
 需求：
 
@@ -4599,15 +4595,15 @@ background.png
 三、style.css 套用背景圖片
 ==================================================
 
-請在 style.css 中幫我整理 body 背景設定。
+請在 style.css 中整理 body 背景設定。
 
-請加入或修改成類似以下方式：
+請加入或修改成以下內容：
 
 body {
   margin: 0;
   min-height: 100vh;
   font-family: "Noto Sans TC", "Microsoft JhengHei", sans-serif;
-  background-image: url("images/background.png");
+  background-image: url("https://i.pinimg.com/736x/fb/2e/44/fb2e442982a05626a875b602da6b916f.jpg");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
@@ -4619,7 +4615,7 @@ body {
 功能說明：
 
 1. background-image：
-   套用 images/background.png
+   套用指定的網路背景圖片
 
 2. background-repeat: no-repeat;
    不要重複平鋪
@@ -4642,28 +4638,9 @@ body {
 
 因為背景圖比較夢幻、比較亮，請幫我加上半透明遮罩或卡片底色，讓文字清楚一點。
 
-請選擇以下其中一種方式，優先使用不破壞版面的做法。
+請優先使用半透明卡片底色，不要破壞原本版面。
 
-方式一：在 body 外加遮罩層
-
-可以在 body 或主要容器上加一層深色透明遮罩。
-
-例如：
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: rgba(8, 18, 60, 0.35);
-  pointer-events: none;
-  z-index: -1;
-}
-
-如果這種做法會影響層級，請改用方式二。
-
-方式二：讓主要卡片或區塊有半透明背景
-
-例如：
+請依照目前專案實際 class 名稱調整，例如：
 
 .home-card,
 .level-panel,
@@ -4676,8 +4653,9 @@ body::before {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
 }
 
-請依照目前專案實際 class 名稱調整，
-但目標是：
+如果目前專案沒有這些 class，請找到首頁卡片、關卡面板、遊戲面板、結算卡片、排除障礙卡片對應的 class，套用同樣的半透明效果。
+
+目標是：
 
 1. 文字清楚
 2. 按鈕清楚
@@ -4685,10 +4663,10 @@ body::before {
 4. 卡片看起來像漂浮在夢幻背景上
 
 ==================================================
-五、按鈕與文字可讀性調整
+五、文字可讀性調整
 ==================================================
 
-請特別幫我檢查以下文字可讀性：
+請特別檢查以下文字：
 
 1. 網站標題
 2. 選擇關卡
@@ -4708,25 +4686,31 @@ body::before {
 3. 不可以因為背景變亮就看不到文字
 4. 必要時請加入 text-shadow
 
-例如：
+請加入或修改：
 
-h1, h2, h3, .progress-text, .level-number {
+h1,
+h2,
+h3,
+.progress-text,
+.level-number {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
 }
+
+如果還有其他重要文字看不清楚，也請加上適合的 text-shadow。
 
 ==================================================
 六、關卡卡片不要被背景吃掉
 ==================================================
 
-目前關卡卡片很多，請確認背景圖套上後，卡片仍然清楚。
+背景圖套上後，請確認關卡卡片仍然清楚。
 
-請幫我檢查：
+請檢查：
 
 1. 已解鎖關卡卡片
 2. 已通關關卡卡片
 3. 鎖定關卡卡片
 
-建議樣式：
+請加入或調整類似以下樣式：
 
 .level-button {
   border-radius: 22px;
@@ -4747,11 +4731,10 @@ h1, h2, h3, .progress-text, .level-number {
 請保持原本關卡邏輯不變，只強化背景套用後的可讀性。
 
 ==================================================
-七、如果只想套用在特定頁面，也請整理好
+七、如果 body 套用不成功
 ==================================================
 
-如果目前整站共用背景不方便，
-請改成讓以下區塊共用背景風格：
+如果目前整站共用背景不方便，請改成讓以下區塊共用背景風格：
 
 1. homeSection
 2. levelSection
@@ -4759,7 +4742,7 @@ h1, h2, h3, .progress-text, .level-number {
 4. resultSection
 5. troubleshootingSection
 
-例如：
+可使用以下方式：
 
 #homeSection,
 #levelSection,
@@ -4767,13 +4750,13 @@ h1, h2, h3, .progress-text, .level-number {
 #resultSection,
 #troubleshootingSection {
   min-height: 100vh;
-  background-image: url("images/background.png");
+  background-image: url("https://i.pinimg.com/736x/fb/2e/44/fb2e442982a05626a875b602da6b916f.jpg");
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
 }
 
-但如果 body 直接套用比較乾淨，優先套用 body。
+但如果 body 直接套用比較乾淨，請優先套用 body。
 
 ==================================================
 八、手機版也要正常
@@ -4789,12 +4772,12 @@ h1, h2, h3, .progress-text, .level-number {
 4. 關卡卡片仍然清楚
 5. 按鈕不要看不見
 
-如果 background-attachment: fixed 在手機有問題，
-請在手機版 media query 裡調整：
+如果 background-attachment: fixed 在手機有問題，請在手機版 media query 裡調整：
 
 @media (max-width: 768px) {
   body {
     background-attachment: scroll;
+    overflow-x: hidden;
   }
 }
 
@@ -4821,39 +4804,13 @@ h1, h2, h3, .progress-text, .level-number {
 
 完成後請告訴我：
 
-1. 是否建立 images 資料夾
-2. 背景圖片應該放在哪裡
-3. style.css 哪裡套用了背景圖
-4. 是套用在 body 還是各 section
-5. 是否有加遮罩或半透明卡片底
-6. 手機版是否有調整背景顯示
-7. 是否有檢查文字清楚度
-
----
-
-# 你自己要做的動作
-
-你要把背景圖放到專案裡：
-
-typing-level-game/images/background.png
-
-如果你現在的檔名不是 \`background.png\`，建議你改名，這樣最穩定。
-
----
-
-# 最後專案建議長這樣
-
-typing-level-game/
-├── index.html
-├── style.css
-├── script.js
-├── data/
-│   ├── words.json
-│   └── levels.json
-├── sounds/
-│   └── 打字.MP3
-└── images/
-    └── background.png`,
+1. 背景圖片是否已改成指定網址
+2. style.css 哪裡套用了背景圖
+3. 是套用在 body 還是各 section
+4. 是否有加半透明卡片底
+5. 手機版是否有調整背景顯示
+6. 是否有檢查文字清楚度
+7. 是否保留原本所有遊戲功能`,
         images: [
             {
                 title: "背景圖片範例",
