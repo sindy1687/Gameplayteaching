@@ -3002,19 +3002,671 @@ if (isWrongPracticeMode) {
 9. resultSection 是否有隱藏。
 10. gameSection 是否有顯示。
 
-請不要重構整個專案，只修正錯題練習沒有題目的問題。`,
-        images: [
-            {
-                title: "錯題練習畫面範例",
-                src: "images/圖片12-1.png",
-                note: "參考這張圖片了解錯題練習畫面"
-            },
-            {
-                title: "錯題練習流程",
-                src: "images/圖片12.png",
-                note: "參考這張圖片了解錯題練習流程"
-            }
-        ],
+請不要重構整個專案，只修正錯題練習沒有題目的問題。
+
+==================================================
+補充功能：加入愛心系統與時間倒數系統
+==================================================
+
+請幫我在英打闖關遊戲中加入：
+
+1. 愛心系統
+2. 時間倒數系統
+
+請不要重建專案。
+請不要刪除原本功能。
+請不要改變原本關卡資料邏輯。
+請不要修改 words.json 和 levels.json 的格式。
+請只加入愛心、倒數時間，以及相關畫面顯示。
+
+目前專案架構是：
+
+typing-level-game/
+├── index.html
+├── style.css
+├── script.js
+├── data/
+│   ├── words.json
+│   └── levels.json
+├── sounds/
+│   └── 打字.MP3
+└── images/
+    └── background.png
+
+目前已經有功能：
+
+1. 首頁
+2. 關卡選擇
+3. 讀取 words.json
+4. 讀取 levels.json
+5. 星星評分
+6. 星星總數進度條
+7. 關卡解鎖
+8. 發音功能
+9. 打字音效
+10. 結算畫面
+11. 錯題練習
+12. 排除障礙區塊
+
+請保留以上功能。
+
+==================================================
+一、愛心系統規則
+==================================================
+
+1. 每一關開始時有 3 顆愛心。
+2. 答錯一題扣 1 顆愛心。
+3. 答對不扣愛心。
+4. 愛心歸 0 時，本關立即結束。
+5. 愛心歸 0 時，不通關。
+6. 愛心歸 0 時，星星為 0。
+7. 愛心歸 0 時，不解鎖下一關。
+8. 愛心歸 0 時，仍然進入結算畫面。
+9. 結算畫面要顯示：
+挑戰失敗，愛心用完了！
+
+愛心顯示方式請使用：
+
+❤️❤️❤️
+❤️❤️♡
+❤️♡♡
+♡♡♡
+
+==================================================
+二、時間倒數系統規則
+==================================================
+
+1. 每一關有倒數時間。
+2. 預設每一關 120 秒。
+3. 遊戲開始後開始倒數。
+4. 每秒更新一次畫面。
+5. 時間到時，本關立即結束。
+6. 時間到時，不通關。
+7. 時間到時，星星為 0。
+8. 時間到時，不解鎖下一關。
+9. 時間到時，仍然進入結算畫面。
+10. 結算畫面要顯示：
+挑戰失敗，時間到了！
+
+時間顯示格式：
+
+02:00
+01:59
+01:58
+
+時間少於 10 秒時，請加上警示樣式，例如變紅或閃爍。
+
+==================================================
+三、levels.json 支援自訂時間與愛心
+==================================================
+
+請讓程式支援以下欄位：
+
+{
+  "level": 1,
+  "title": "第 1 關：寵物單字",
+  "category": "pet",
+  "questionCount": 20,
+  "timeLimit": 120,
+  "heartLimit": 3
+}
+
+如果 levels.json 沒有 timeLimit，就預設 120 秒。
+
+如果 levels.json 沒有 heartLimit，就預設 3 顆愛心。
+
+請使用：
+
+const timeLimit = currentLevel.timeLimit || 120;
+const heartLimit = currentLevel.heartLimit || 3;
+
+==================================================
+四、index.html 新增畫面元素
+==================================================
+
+請在 gameSection 裡新增狀態列。
+
+放在 currentLevelTitle 下方，questionProgress 上方。
+
+請加入：
+
+<div class="game-status-bar">
+  <div id="heartDisplay" class="heart-display">❤️❤️❤️</div>
+  <div id="timerDisplay" class="timer-display">02:00</div>
+</div>
+
+注意：
+
+1. heartDisplay 顯示愛心。
+2. timerDisplay 顯示倒數時間。
+3. 不要刪除原本發音按鈕。
+4. 不要刪除原本輸入框。
+5. 不要刪除原本答題提示。
+
+==================================================
+五、script.js 新增狀態變數
+==================================================
+
+請在 script.js 上方遊戲狀態變數區加入：
+
+let heartLimit = 3;
+let currentHearts = 3;
+
+let timeLimit = 120;
+let remainingTime = 120;
+let timerInterval = null;
+
+let levelEndReason = "completed";
+let isLevelActive = false;
+
+用途說明：
+
+1. heartLimit：本關最大愛心數。
+2. currentHearts：目前剩餘愛心。
+3. timeLimit：本關總秒數。
+4. remainingTime：目前剩餘秒數。
+5. timerInterval：倒數計時器。
+6. levelEndReason：結束原因。
+   - completed：完成所有題目
+   - no-hearts：愛心用完
+   - timeout：時間到了
+7. isLevelActive：避免關卡結束後還能繼續送出答案。
+
+==================================================
+六、建立愛心顯示功能
+==================================================
+
+請新增：
+
+function updateHeartDisplay() {
+  const heartDisplay = document.getElementById("heartDisplay");
+  if (!heartDisplay) return;
+
+  let heartsText = "";
+
+  for (let i = 1; i <= heartLimit; i++) {
+    heartsText += i <= currentHearts ? "❤️" : "♡";
+  }
+
+  heartDisplay.textContent = heartsText;
+}
+
+==================================================
+七、建立時間格式功能
+==================================================
+
+請新增：
+
+function formatTime(seconds) {
+  const safeSeconds = Math.max(0, Number(seconds) || 0);
+  const minutes = Math.floor(safeSeconds / 60);
+  const secs = safeSeconds % 60;
+
+  return \`\${String(minutes).padStart(2, "0")}:\${String(secs).padStart(2, "0")}\`;
+}
+
+注意：
+這裡一定要使用反引號 \` 包住時間字串，不可以少掉反引號，否則會造成 JavaScript 錯誤。
+
+==================================================
+八、建立時間顯示功能
+==================================================
+
+請新增：
+
+function updateTimerDisplay() {
+  const timerDisplay = document.getElementById("timerDisplay");
+  if (!timerDisplay) return;
+
+  timerDisplay.textContent = formatTime(remainingTime);
+
+  if (remainingTime <= 10) {
+    timerDisplay.classList.add("timer-warning");
+  } else {
+    timerDisplay.classList.remove("timer-warning");
+  }
+}
+
+==================================================
+九、建立開始倒數功能
+==================================================
+
+請新增：
+
+function startTimer() {
+  stopTimer();
+
+  updateTimerDisplay();
+
+  timerInterval = setInterval(() => {
+    if (!isLevelActive) {
+      stopTimer();
+      return;
+    }
+
+    remainingTime--;
+
+    updateTimerDisplay();
+
+    if (remainingTime <= 0) {
+      remainingTime = 0;
+      updateTimerDisplay();
+      stopTimer();
+      endLevelByTimeout();
+    }
+  }, 1000);
+}
+
+==================================================
+十、建立停止倒數功能
+==================================================
+
+請新增：
+
+function stopTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+}
+
+注意：
+
+1. 完成關卡時要 stopTimer()。
+2. 愛心歸 0 時要 stopTimer()。
+3. 重新挑戰時要 stopTimer() 再重新開始。
+4. 回關卡選擇時要 stopTimer()。
+5. 回首頁時要 stopTimer()。
+
+==================================================
+十一、開始關卡時初始化愛心與時間
+==================================================
+
+請修改 startLevel(levelData)。
+
+開始正常關卡時，請加入：
+
+heartLimit = Number(levelData.heartLimit) || 3;
+currentHearts = heartLimit;
+
+timeLimit = Number(levelData.timeLimit) || 120;
+remainingTime = timeLimit;
+
+levelEndReason = "completed";
+isLevelActive = true;
+
+updateHeartDisplay();
+updateTimerDisplay();
+startTimer();
+
+請依照目前專案原本 startLevel 寫法整合，不要把原本讀題功能弄壞。
+
+==================================================
+十二、答錯時扣愛心
+==================================================
+
+請修改 submitAnswer()。
+
+答錯時：
+
+1. wrongCount + 1
+2. 記錄 wrongQuestions
+3. currentHearts - 1
+4. updateHeartDisplay()
+5. 如果 currentHearts <= 0，立即結束關卡
+
+範例邏輯：
+
+if (!isCorrect) {
+  wrongCount++;
+  currentHearts = Math.max(0, currentHearts - 1);
+  updateHeartDisplay();
+
+  // 原本錯題記錄保留
+
+  if (currentHearts <= 0) {
+    endLevelByNoHearts();
+    return;
+  }
+}
+
+注意：
+
+1. 愛心歸 0 時，不要再進下一題。
+2. 愛心歸 0 時，不要再 showQuestion()。
+3. 愛心歸 0 時，要直接進結算畫面。
+4. 答對不回復愛心，先不要加補血功能。
+
+==================================================
+十三、送出答案防呆
+==================================================
+
+請在 submitAnswer() 一開始加：
+
+if (!isLevelActive) return;
+
+if (!currentQuestions || currentQuestions.length === 0) return;
+
+空白答案不要扣愛心。
+
+==================================================
+十四、建立愛心歸 0 結束功能
+==================================================
+
+請新增：
+
+function endLevelByNoHearts() {
+  if (!isLevelActive) return;
+
+  levelEndReason = "no-hearts";
+  isLevelActive = false;
+  stopTimer();
+
+  const answerFeedback = document.getElementById("answerFeedback");
+  if (answerFeedback) {
+    answerFeedback.textContent = "挑戰失敗，愛心用完了！";
+  }
+
+  finishLevel();
+}
+
+==================================================
+十五、建立時間到結束功能
+==================================================
+
+請新增：
+
+function endLevelByTimeout() {
+  if (!isLevelActive) return;
+
+  levelEndReason = "timeout";
+  isLevelActive = false;
+  stopTimer();
+
+  const answerFeedback = document.getElementById("answerFeedback");
+  if (answerFeedback) {
+    answerFeedback.textContent = "挑戰失敗，時間到了！";
+  }
+
+  finishLevel();
+}
+
+==================================================
+十六、完成所有題目時停止倒數
+==================================================
+
+請修改 showQuestion() 或 finishLevel()。
+
+當所有題目答完進入 finishLevel() 時：
+
+1. levelEndReason = "completed";
+2. isLevelActive = false;
+3. stopTimer();
+
+如果是正常完成所有題目，才依照答對率給星星。
+
+如果是 no-hearts 或 timeout，星星一定是 0。
+
+==================================================
+十七、修改 finishLevel()
+==================================================
+
+finishLevel() 要能處理三種結束原因：
+
+1. completed：正常完成所有題目
+2. no-hearts：愛心用完
+3. timeout：時間到了
+
+請加入邏輯：
+
+let stars = 0;
+let isPassed = false;
+
+if (levelEndReason === "completed") {
+  if (accuracy >= 95) {
+    stars = 3;
+  } else if (accuracy >= 80) {
+    stars = 2;
+  } else if (accuracy >= 75) {
+    stars = 1;
+  } else {
+    stars = 0;
+  }
+
+  isPassed = stars >= 1;
+} else {
+  stars = 0;
+  isPassed = false;
+}
+
+如果 levelEndReason 是 no-hearts：
+
+resultPassText 顯示：
+
+挑戰失敗，愛心用完了！
+
+如果 levelEndReason 是 timeout：
+
+resultPassText 顯示：
+
+挑戰失敗，時間到了！
+
+如果 completed 但 stars >= 1：
+
+resultPassText 顯示：
+
+恭喜通關！
+
+如果 completed 但 stars === 0：
+
+resultPassText 顯示：
+
+還沒有通關，再挑戰一次！
+
+注意：
+
+1. no-hearts 不更新星星。
+2. timeout 不更新星星。
+3. no-hearts 不解鎖下一關。
+4. timeout 不解鎖下一關。
+5. 錯題練習不更新星星。
+6. 錯題練習不解鎖下一關。
+
+==================================================
+十八、錯題練習模式的愛心與時間
+==================================================
+
+請讓錯題練習也可以顯示愛心與時間，但不影響星星。
+
+錯題練習建議規則：
+
+1. 錯題練習有 3 顆愛心。
+2. 錯題練習時間為 60 秒。
+3. 錯題練習愛心歸 0，顯示錯題練習失敗。
+4. 錯題練習時間到，顯示錯題練習時間到。
+5. 錯題練習完成，不更新星星、不解鎖關卡。
+
+請在 startWrongPractice() 裡加入：
+
+heartLimit = 3;
+currentHearts = heartLimit;
+
+timeLimit = 60;
+remainingTime = timeLimit;
+
+levelEndReason = "completed";
+isLevelActive = true;
+
+updateHeartDisplay();
+updateTimerDisplay();
+startTimer();
+
+==================================================
+十九、切換畫面時停止倒數
+==================================================
+
+請檢查以下功能，加入 stopTimer()：
+
+1. goHome()
+2. backToLevelsButton 點擊
+3. resetProgress()
+4. retryLevelButton 點擊前
+5. startLevel() 開頭
+6. startWrongPractice() 開頭
+
+==================================================
+二十、style.css 新增愛心與時間樣式
+==================================================
+
+請加入：
+
+.game-status-bar {
+  width: min(520px, 92%);
+  margin: 18px auto 10px;
+  padding: 12px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.heart-display {
+  font-size: 1.45rem;
+  letter-spacing: 3px;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
+}
+
+.timer-display {
+  min-width: 78px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.22);
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 900;
+  text-align: center;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
+}
+
+.timer-warning {
+  background: rgba(255, 71, 87, 0.9);
+  color: #ffffff;
+  animation: timerPulse 0.7s infinite alternate;
+}
+
+@keyframes timerPulse {
+  from {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255, 71, 87, 0);
+  }
+
+  to {
+    transform: scale(1.06);
+    box-shadow: 0 0 16px rgba(255, 71, 87, 0.8);
+  }
+}
+
+@media (max-width: 600px) {
+  .game-status-bar {
+    width: 94%;
+    border-radius: 20px;
+    flex-direction: column;
+  }
+
+  .heart-display {
+    font-size: 1.35rem;
+  }
+
+  .timer-display {
+    font-size: 1.15rem;
+  }
+}
+
+==================================================
+二十一、結算畫面補充顯示
+==================================================
+
+如果 resultSection 裡有空間，請加入：
+
+<p id="resultStatusText"></p>
+
+finishLevel() 裡更新：
+
+正常完成：
+
+resultStatusText.textContent = \`剩餘愛心：\${currentHearts}/\${heartLimit}，剩餘時間：\${formatTime(remainingTime)}\`;
+
+愛心用完：
+
+resultStatusText.textContent = "失敗原因：愛心用完";
+
+時間到：
+
+resultStatusText.textContent = "失敗原因：時間到了";
+
+注意：
+這裡剩餘愛心與剩餘時間也要使用反引號 \` 包成 template string，不可以少掉反引號。
+
+==================================================
+二十二、測試需求
+==================================================
+
+請完成後測試：
+
+1. 點第 1 關後，顯示 3 顆愛心。
+2. 點第 1 關後，時間從 02:00 開始倒數。
+3. 答對不扣愛心。
+4. 答錯扣 1 顆愛心。
+5. 答錯 3 次後，愛心變 0，關卡失敗。
+6. 愛心歸 0 後，不能繼續答題。
+7. 愛心歸 0 後，結算畫面顯示挑戰失敗。
+8. 愛心歸 0 後，不給星星。
+9. 愛心歸 0 後，不解鎖下一關。
+10. 時間到後，關卡失敗。
+11. 時間到後，不給星星。
+12. 時間到後，不解鎖下一關。
+13. 完成所有題目後，時間停止。
+14. 完成所有題目後，依照原本答對率給星星。
+15. 回到關卡頁後，倒數停止。
+16. 重新挑戰時，愛心與時間重設。
+17. 錯題練習時也不會破壞星星進度。
+18. 手機版愛心與時間顯示不跑版。
+19. 發音功能仍正常。
+20. 打字音效仍正常。
+21. 星星總數進度條仍正常。
+
+==================================================
+二十三、不要做的事情
+==================================================
+
+1. 不要重建整個專案。
+2. 不要刪除原本答題功能。
+3. 不要刪除發音功能。
+4. 不要刪除打字音效。
+5. 不要刪除錯題練習。
+6. 不要刪除排除障礙。
+7. 不要刪除星星總數進度條。
+8. 不要修改 words.json 格式。
+9. 不要修改 levels.json 格式。
+10. 不要改變星星評分規則。
+11. 不要讓錯題練習更新星星。
+12. 不要讓時間到還能通關。
+13. 不要讓愛心歸 0 還能通關。
+14. 不要把中文轉成 Unicode escape。
+15. 不要讓中文亂碼。
+
+完成後請回報：
+
+1. 只修改了第十步嗎？
+2. 是否沒有刪除第十步原本內容？
+3. 是否是新增在第十步原本程式碼區塊下方？
+4. 是否沒有修改第一步到第九步？
+5. 是否沒有修改第十一步以後？
+6. 複製按鈕是否仍然正常？`,
+        images: [],
         downloads: []
     },
     {
@@ -4212,7 +4864,7 @@ typing-level-game/
         downloads: [
             {
                 title: "背景圖片下載",
-                src: "images/圖片14.png",
+                src: "https://i.pinimg.com/736x/fb/2e/44/fb2e442982a05626a875b602da6b916f.jpg",
                 filename: "background.png",
                 note: "下載這張背景圖片並放到 images 資料夾中"
             }
@@ -5080,7 +5732,220 @@ sounds/typing.mp3
 
 【需要手動確認】
 - sounds/打字.MP3 是否存在
-- images/background.png 是否存在`,
+- images/background.png 是否存在
+
+==================================================
+補充修正：關卡卡片星星顯示問題
+==================================================
+
+請幫我修正關卡卡片星星沒有正確顯示的問題。
+
+目前畫面狀況：
+
+第 1 關卡片下面顯示：
+
+☆☆☆
+
+但是第 1 關應該要依照玩家拿到的星星數顯示：
+
+⭐
+⭐⭐
+⭐⭐⭐
+
+如果沒有通關，才顯示：
+
+☆☆☆
+
+請不要重建專案。
+請不要刪除原本功能。
+請只修正關卡卡片星星顯示問題。
+
+==================================================
+一、問題說明
+==================================================
+
+目前關卡卡片星星顯示錯誤。
+
+畫面上有星星位置，但是顯示成空心星星：
+
+☆☆☆
+
+我要改成：
+
+0 顆星：☆☆☆
+1 顆星：⭐☆☆
+2 顆星：⭐⭐☆
+3 顆星：⭐⭐⭐
+
+請不要只顯示空心星星。
+
+==================================================
+二、請修正 getStarsText()
+==================================================
+
+請在 script.js 裡找到 getStarsText()。
+
+請改成以下邏輯：
+
+function getStarsText(starCount) {
+  const stars = Number(starCount) || 0;
+  const fullStars = Math.max(0, Math.min(3, stars));
+  const emptyStars = 3 - fullStars;
+
+  return "⭐".repeat(fullStars) + "☆".repeat(emptyStars);
+}
+
+顯示結果：
+
+getStarsText(0) → ☆☆☆
+getStarsText(1) → ⭐☆☆
+getStarsText(2) → ⭐⭐☆
+getStarsText(3) → ⭐⭐⭐
+
+==================================================
+三、請檢查 renderLevelList()
+==================================================
+
+請在 renderLevelList() 裡確認星星數讀取正確。
+
+請使用：
+
+const levelKey = String(level.level);
+const starCount = Number(playerProgress.stars[levelKey] || 0);
+const starsText = getStarsText(starCount);
+
+關卡卡片裡請使用：
+
+<div class="level-stars">\${starsText}</div>
+
+==================================================
+四、請確認 stars 儲存格式
+==================================================
+
+localStorage 裡 stars 應該長這樣：
+
+{
+  "1": 3,
+  "2": 2
+}
+
+請確認 updateProgressAfterLevel(levelNumber, stars) 儲存時使用字串 key：
+
+const levelKey = String(levelNumber);
+
+const oldStars = Number(playerProgress.stars[levelKey] || 0);
+
+if (stars > oldStars) {
+  playerProgress.stars[levelKey] = stars;
+}
+
+這樣第 1 關拿 3 顆星時，資料會是：
+
+"stars": {
+  "1": 3
+}
+
+==================================================
+五、請不要讓舊資料造成錯誤
+==================================================
+
+請在 loadProgress() 後確認 stars 是物件：
+
+if (!playerProgress.stars || typeof playerProgress.stars !== "object") {
+  playerProgress.stars = {};
+}
+
+請確認星星值是數字。
+
+如果讀到：
+
+"1": "3"
+
+也要可以正常顯示成 3 顆星。
+
+所以 getStarsText() 裡要用：
+
+Number(starCount) || 0
+
+==================================================
+六、請檢查 CSS 是否把實心星星弄不見
+==================================================
+
+請檢查 style.css 裡 .level-stars。
+
+請確認沒有這種問題：
+
+1. color 設成透明
+2. font-size 太小
+3. text-shadow 太強看不清楚
+4. z-index 被蓋住
+5. line-height 太小
+6. opacity 太低
+
+請把 .level-stars 改成：
+
+.level-stars {
+  margin-top: 8px;
+  min-height: 28px;
+  font-size: 1.35rem;
+  letter-spacing: 2px;
+  color: #ffd166;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
+  font-weight: bold;
+}
+
+==================================================
+七、請測試
+==================================================
+
+請測試以下狀況：
+
+1. 清除進度後：
+第 1 關顯示 ☆☆☆
+
+2. 第 1 關拿 1 顆星：
+第 1 關顯示 ⭐☆☆
+
+3. 第 1 關拿 2 顆星：
+第 1 關顯示 ⭐⭐☆
+
+4. 第 1 關拿 3 顆星：
+第 1 關顯示 ⭐⭐⭐
+
+5. 第 1 關原本 3 顆星，重玩拿 1 顆星：
+仍然顯示 ⭐⭐⭐
+
+6. 第 2 關解鎖但還沒通關：
+顯示 ☆☆☆ 或尚未通關，不要顯示已通關
+
+7. 重新整理網頁後，星星仍然正常顯示。
+
+==================================================
+八、不要做的事情
+==================================================
+
+1. 不要重建整個專案。
+2. 不要清除 localStorage。
+3. 不要刪除星星資料。
+4. 不要改變星星評分規則。
+5. 不要改變關卡解鎖規則。
+6. 不要刪除星星總數進度條。
+7. 不要修改 words.json。
+8. 不要修改 levels.json。
+9. 不要把中文轉成 Unicode escape。
+10. 不要讓中文亂碼。
+
+==================================================
+九、完成後請回報
+==================================================
+
+完成後請告訴我：
+
+1. 是否只修改第十六步。
+2. 是否沒有修改其他步驟。
+3. 是否已把星星顯示修正內容新增到第十六步。
+4. 第十六步原本內容是否保留。
+5. 複製按鈕是否仍然正常。`,
         images: [],
         downloads: [
             {
