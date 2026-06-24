@@ -1,0 +1,433 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+  padding: 20px;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 頁面切換 */
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+/* 首頁標題區 */
+.header {
+  text-align: center;
+  padding: 40px 20px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.title {
+  font-size: 2.5rem;
+  color: #4a90e2;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* 搜尋框 */
+.search-container {
+  margin-bottom: 30px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 15px 20px;
+  font-size: 1rem;
+  border: 2px solid #ddd;
+  border-radius: 25px;
+  outline: none;
+  transition: border-color 0.3s;
+  font-family: inherit;
+}
+
+.search-input:focus {
+  border-color: #4a90e2;
+}
+
+/* 教學分類卡片 */
+.tutorial-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.category-card {
+  background: white;
+  border-radius: 15px;
+  padding: 25px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border: 3px solid transparent;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  border-color: #4a90e2;
+}
+
+.category-card h3 {
+  color: #4a90e2;
+  font-size: 1.3rem;
+  margin-bottom: 10px;
+}
+
+.category-card p {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* 教學內容頁 */
+.tutorial-content {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.back-button {
+  background: #4a90e2;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1rem;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-bottom: 25px;
+  font-family: inherit;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.back-button:hover {
+  background: #357abd;
+}
+
+/* 教學詳細內容 */
+.tutorial-detail h2 {
+  color: #4a90e2;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 3px solid #4a90e2;
+}
+
+.tutorial-section {
+  margin-bottom: 30px;
+}
+
+.tutorial-section h3 {
+  color: #333;
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  background: #f0f7ff;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border-left: 4px solid #4a90e2;
+}
+
+.tutorial-section p {
+  color: #555;
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+/* 步驟列表 */
+.steps-list {
+  list-style: none;
+  padding: 0;
+}
+
+.steps-list li {
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  background: #f9f9f9;
+  border-radius: 10px;
+  border-left: 4px solid #4a90e2;
+  color: #555;
+  line-height: 1.6;
+}
+
+.steps-list li::before {
+  content: "✓ ";
+  color: #4a90e2;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+/* 指令碼區塊 */
+.code-section {
+  margin: 25px 0;
+}
+
+.code-block {
+  background: #2d2d2d;
+  color: #f8f8f2;
+  padding: 20px;
+  border-radius: 10px;
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 400px;
+  font-family: 'Consolas', 'Monaco', monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  white-space: pre;
+  position: relative;
+}
+
+.copy-button {
+  background: #4a90e2;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-family: inherit;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.copy-button:hover {
+  background: #357abd;
+}
+
+.copy-button.copied {
+  background: #27ae60;
+}
+
+/* 圖片示範區 */
+.image-section {
+  margin: 25px 0;
+}
+
+.image-placeholder {
+  background: #f0f0f0;
+  border: 2px dashed #ccc;
+  border-radius: 15px;
+  padding: 40px 20px;
+  text-align: center;
+  color: #999;
+  font-size: 1.1rem;
+}
+
+.image-item {
+  margin-bottom: 20px;
+}
+
+.image-item h4 {
+  color: #4a90e2;
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+.image-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.image-item p {
+  color: #666;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* 無搜尋結果 */
+.no-results {
+  text-align: center;
+  padding: 40px;
+  color: #999;
+  font-size: 1.2rem;
+}
+
+/* 圖片放大模態框 */
+.image-modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.9);
+  animation: fadeIn 0.3s;
+}
+
+.image-modal.show {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  max-width: 90%;
+  max-height: 90%;
+  margin: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  animation: zoomIn 0.3s;
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s;
+  z-index: 1001;
+}
+
+.modal-close:hover {
+  color: #4a90e2;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* 下載區塊樣式 */
+.download-section {
+  margin-top: 20px;
+}
+
+.download-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.download-link {
+  display: inline-block;
+  padding: 12px 24px;
+  border-radius: 8px;
+  background: #ffd166;
+  color: #2b2100;
+  text-decoration: none;
+  font-weight: bold;
+  transition: all 0.3s;
+  border: none;
+  cursor: pointer;
+}
+
+.download-link:hover {
+  background: #ffbf3f;
+  transform: translateY(-2px);
+}
+
+.download-notes {
+  padding: 15px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.download-note {
+  margin: 8px 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.download-note strong {
+  color: #ffd166;
+}
+
+.no-downloads {
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+}
+
+/* 手機版響應式設計 */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .header {
+    padding: 25px 15px;
+  }
+
+  .tutorial-categories {
+    grid-template-columns: 1fr;
+  }
+
+  .tutorial-content {
+    padding: 20px;
+  }
+
+  .tutorial-detail h2 {
+    font-size: 1.5rem;
+  }
+
+  .code-block {
+    font-size: 0.85rem;
+    padding: 15px;
+  }
+
+  .back-button {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .copy-button {
+    width: 100%;
+  }
+}

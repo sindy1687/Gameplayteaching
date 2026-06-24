@@ -1,0 +1,1078 @@
+/* Typing Level Game Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+    background-image: url('images/background.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-color: #0f1d4d;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    color: #ffffff;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 18, 60, 0.35);
+    pointer-events: none;
+    z-index: -1;
+}
+
+#app {
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* 隱藏類別 */
+.hidden {
+    display: none !important;
+}
+
+/* ==================== 統一頁面容器樣式 ==================== */
+#homeSection,
+#levelSelectSection,
+#gameSection,
+#resultSection {
+    min-height: 100vh;
+    padding: 32px 20px;
+    box-sizing: border-box;
+}
+
+/* ==================== 統一玻璃卡片風格 ==================== */
+.home-card,
+.level-select-container,
+.game-container,
+.result-container {
+    width: min(920px, 94%);
+    margin: 0 auto;
+    padding: 28px;
+    border-radius: 28px;
+    background: rgba(10, 20, 55, 0.48);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(8px);
+}
+
+/* ==================== 標題樣式 ==================== */
+h1 {
+    font-size: clamp(2.2rem, 5vw, 4rem);
+    text-align: center;
+    margin: 16px 0 10px;
+    color: #ffffff;
+    text-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+h2 {
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+}
+
+h3 {
+    color: #ffd166;
+}
+
+p {
+    line-height: 1.7;
+}
+
+/* ==================== 首頁樣式 ==================== */
+#homeSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.home-card {
+    text-align: center;
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.game-title {
+    font-size: 2.5rem;
+    color: #ffffff;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+}
+
+.game-subtitle {
+    font-size: 1.2rem;
+    color: #e2e8f0;
+    margin-bottom: 30px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.start-button {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    border: none;
+    padding: 15px 50px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(245, 87, 108, 0.4);
+    font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+}
+
+.start-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(245, 87, 108, 0.5);
+}
+
+.start-button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+}
+
+/* ==================== 關卡選單樣式 ==================== */
+#levelSelectSection {
+    position: relative;
+}
+
+.level-select-container {
+    position: relative;
+    z-index: 1;
+}
+
+/* 返回首頁按鈕 */
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+    backdrop-filter: blur(10px);
+}
+
+.back-button:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+}
+
+/* 關卡選單標題 */
+.level-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+    text-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+    margin-top: 20px;
+}
+
+.level-subtitle {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #e2e8f0;
+    margin-bottom: 30px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* 通關進度條 */
+.progress-container {
+    width: min(520px, 90%);
+    margin: 22px auto;
+    text-align: center;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 20px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.22);
+    border: 2px solid rgba(255, 255, 255, 0.38);
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6fb1, #ffd166);
+    width: 0%;
+    transition: width 0.4s ease;
+    border-radius: 999px;
+}
+
+.progress-text {
+    margin-top: 12px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
+}
+
+/* 關卡格子容器 */
+.level-grid {
+    width: min(980px, 94%);
+    margin: 32px auto 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 18px;
+}
+
+/* 關卡卡片樣式 */
+.level-card {
+    min-height: 120px;
+    border-radius: 24px;
+    border: 2px solid rgba(255, 255, 255, 0.18);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    font-weight: bold;
+    padding: 20px 10px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.level-card:hover:not(.locked) {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+}
+
+/* 已解鎖關卡 */
+.level-card.unlocked,
+.level-card.completed {
+    background: linear-gradient(180deg, #4cc9f0, #12d6df);
+    border-color: #ffdd4a;
+    color: #ffffff;
+}
+
+.level-card.completed {
+    box-shadow: 0 0 20px rgba(255, 221, 74, 0.6);
+}
+
+/* 未解鎖關卡 */
+.level-card.locked {
+    background: rgba(40, 48, 70, 0.78);
+    color: rgba(255, 255, 255, 0.45);
+    cursor: not-allowed;
+}
+
+.level-card.locked:hover {
+    transform: none;
+}
+
+/* 關卡數字 */
+.level-number {
+    font-size: 2.3rem;
+    text-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
+}
+
+/* 星星顯示 */
+.level-stars {
+    margin-top: 8px;
+    font-size: 1.2rem;
+}
+
+/* 鎖頭圖示 */
+.lock-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* ==================== 手機版整體調整 ==================== */
+@media (max-width: 768px) {
+    #homeSection,
+    #levelSelectSection,
+    #gameSection,
+    #resultSection {
+        padding: 22px 14px;
+    }
+
+    .home-card,
+    .level-select-container,
+    .game-container,
+    .result-container {
+        width: 94%;
+        padding: 20px;
+        border-radius: 22px;
+    }
+
+    .level-grid {
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+        gap: 14px;
+    }
+
+    .level-card {
+        min-height: 105px;
+    }
+
+    .level-number {
+        font-size: 2rem;
+    }
+
+    #answerInput {
+        width: 92%;
+        font-size: 1.2rem;
+    }
+
+    .result-buttons,
+    .home-actions,
+    .button-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .result-buttons button,
+    .home-actions button,
+    .button-group button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 420px) {
+    .level-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .level-card {
+        min-height: 96px;
+    }
+}
+
+/* 首頁手機版響應式 */
+@media (max-width: 480px) {
+    body {
+        background-attachment: scroll;
+    }
+
+    .home-card {
+        padding: 30px 20px;
+    }
+
+    .game-title {
+        font-size: 1.8rem;
+    }
+
+    .game-subtitle {
+        font-size: 1rem;
+    }
+
+    .start-button {
+        padding: 12px 40px;
+        font-size: 1.1rem;
+    }
+}
+
+/* ==================== 遊戲區塊樣式 ==================== */
+#gameSection {
+    position: relative;
+}
+
+.game-container {
+    position: relative;
+    z-index: 1;
+}
+
+/* 遊戲關卡標題 */
+.game-level-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+    text-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+    margin-top: 20px;
+}
+
+.game-level-description {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #e2e8f0;
+    margin-bottom: 30px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* 遊戲資訊欄 */
+.game-info-bar {
+    display: flex;
+    justify-content: space-around;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 30px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.game-info-item {
+    text-align: center;
+}
+
+.info-label {
+    display: block;
+    color: #b0b0b0;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+}
+
+.info-value {
+    display: block;
+    color: #ffffff;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+/* 題目卡片 */
+.question-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.question-text {
+    margin: 26px auto;
+    font-size: clamp(2.4rem, 7vw, 5rem);
+    font-weight: 900;
+    text-align: center;
+    color: #ffffff;
+    text-shadow: 0 5px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* 輸入區域 */
+.input-area {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.answer-input {
+    display: block;
+    width: min(520px, 90%);
+    margin: 22px auto;
+    padding: 16px 20px;
+    border-radius: 18px;
+    border: 2px solid rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.92);
+    color: #123;
+    font-size: 1.4rem;
+    text-align: center;
+    font-weight: bold;
+    outline: none;
+    font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+    transition: all 0.3s ease;
+}
+
+.answer-input::placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.answer-input:focus {
+    border-color: #ffd166;
+    box-shadow: 0 0 0 4px rgba(255, 209, 102, 0.28);
+}
+
+.submit-button {
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(245, 87, 108, 0.4);
+    font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+}
+
+.submit-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(245, 87, 108, 0.5);
+}
+
+.submit-button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+}
+
+/* 提示按鈕 */
+.hint-button {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(255, 152, 0, 0.4);
+    font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+}
+
+.hint-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(255, 152, 0, 0.5);
+}
+
+.hint-button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 15px rgba(255, 152, 0, 0.4);
+}
+
+/* 播放發音按鈕 */
+.speak-button {
+    display: block;
+    margin: 12px auto;
+    padding: 12px 22px;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #bde0fe, #8ecae6);
+    color: #073b4c;
+    font-size: 1.05rem;
+    font-weight: bold;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+}
+
+.speak-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+.speak-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 訊息顯示區域 */
+.message-display {
+    text-align: center;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.message-display.warning {
+    background: rgba(255, 152, 0, 0.2);
+    border: 2px solid #ff9800;
+    color: #ff9800;
+}
+
+.message-display.error {
+    background: rgba(244, 67, 54, 0.2);
+    border: 2px solid #f44336;
+    color: #f44336;
+}
+
+/* 答題結果提示 */
+.answer-feedback {
+    text-align: center;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.answer-feedback.correct {
+    background: rgba(76, 175, 80, 0.2);
+    border: 2px solid #4caf50;
+    color: #4caf50;
+}
+
+.answer-feedback.wrong {
+    background: rgba(244, 67, 54, 0.2);
+    border: 2px solid #f44336;
+    color: #f44336;
+}
+
+/* 提示區域 */
+.hint-area {
+    text-align: center;
+    padding: 15px;
+    background: rgba(255, 193, 7, 0.1);
+    border-radius: 10px;
+    border: 2px solid rgba(255, 193, 7, 0.3);
+}
+
+.hint-text {
+    color: #ffc107;
+    font-size: 1.1rem;
+}
+
+/* 遊戲區塊手機版響應式 */
+@media (max-width: 600px) {
+    .game-level-title {
+        font-size: 1.8rem;
+        margin-top: 20px;
+    }
+
+    .game-level-description {
+        font-size: 1rem;
+    }
+
+    .game-info-bar {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .game-info-item {
+        flex: 1 1 45%;
+    }
+
+    .info-label {
+        font-size: 0.8rem;
+    }
+
+    .info-value {
+        font-size: 1.1rem;
+    }
+
+    .question-card {
+        padding: 30px 20px;
+    }
+
+    .question-text {
+        font-size: 2rem;
+    }
+
+    .input-area {
+        flex-direction: column;
+    }
+
+    .answer-input {
+        font-size: 1.1rem;
+    }
+
+    .submit-button {
+        padding: 12px 30px;
+        font-size: 1.1rem;
+    }
+
+    .answer-feedback {
+        font-size: 1.1rem;
+    }
+
+    .hint-text {
+        font-size: 1rem;
+    }
+}
+
+/* ==================== 結果區塊樣式 ==================== */
+#resultSection {
+    position: relative;
+}
+
+.result-container {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+.result-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #ffffff;
+    margin-bottom: 10px;
+    text-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+}
+
+.result-level-title {
+    text-align: center;
+    font-size: 1.5rem;
+    color: #e2e8f0;
+    margin-bottom: 30px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+.result-stats {
+    display: flex;
+    justify-content: space-around;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.result-stat-item {
+    text-align: center;
+}
+
+.result-stat-label {
+    display: block;
+    color: #b0b0b0;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.result-stat-value {
+    display: block;
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.result-stars-container {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.result-stars-label {
+    color: #b0b0b0;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.result-stars {
+    font-size: 2.2rem;
+    margin: 16px 0;
+    letter-spacing: 4px;
+    color: #ffd700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.result-pass-text {
+    text-align: center;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 30px;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.pass-text {
+    color: #80ed99;
+    font-weight: bold;
+}
+
+.fail-text {
+    color: #ffccd5;
+    font-weight: bold;
+}
+
+.result-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 22px;
+}
+
+.result-button {
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+}
+
+.result-button:first-child {
+    background: linear-gradient(180deg, #ffd166, #ffb703);
+    color: #2b2100;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+}
+
+.result-button:first-child:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.28);
+}
+
+.result-button:last-child {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    box-shadow: 0 8px 20px rgba(245, 87, 108, 0.4);
+}
+
+.result-button:last-child:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(245, 87, 108, 0.5);
+}
+
+#wrongPracticeButton {
+    background: linear-gradient(135deg, #ffd166 0%, #ff9f1c 100%);
+    color: #2b2100;
+    box-shadow: 0 8px 20px rgba(255, 209, 102, 0.4);
+}
+
+#wrongPracticeButton:hover {
+    box-shadow: 0 12px 30px rgba(255, 209, 102, 0.5);
+}
+
+#wrongPracticeButton.disabled,
+#wrongPracticeButton:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* 錯題列表樣式 */
+.wrong-list-box {
+    margin-top: 20px;
+    padding: 18px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.13);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.wrong-list-box h3 {
+    color: #ffd166;
+    text-align: center;
+}
+
+.wrong-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 10px 0;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.wrong-number {
+    opacity: 0.8;
+    min-width: 25px;
+}
+
+.wrong-chinese {
+    min-width: 80px;
+}
+
+.wrong-answer {
+    color: #ffd166;
+}
+
+.no-wrong-text {
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+}
+
+.no-stars-text {
+    color: #ffd166;
+    font-weight: bold;
+}
+
+/* 錯題練習熟練度顯示 */
+.practice-progress {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 12px auto;
+    padding: 10px 20px;
+    border-radius: 15px;
+    background: rgba(255, 209, 102, 0.2);
+    border: 2px solid rgba(255, 209, 102, 0.4);
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.practice-label {
+    color: #ffd166;
+}
+
+.mastery-count {
+    color: #ffd166;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.practice-remaining {
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+/* 清除進度按鈕 */
+.reset-progress-button {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    background: rgba(255, 107, 107, 0.9);
+    color: #ffffff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+}
+
+.reset-progress-button:hover {
+    background: rgba(255, 107, 107, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(255, 107, 107, 0.4);
+}
+
+/* 結果區塊手機版響應式 */
+@media (max-width: 600px) {
+    .result-container {
+        padding: 30px 20px;
+    }
+
+    .result-title {
+        font-size: 2rem;
+    }
+
+    .result-level-title {
+        font-size: 1.2rem;
+    }
+
+    .result-stats {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .result-stat-value {
+        font-size: 1.5rem;
+    }
+
+    .result-stars {
+        font-size: 2.5rem;
+    }
+
+    .result-pass-text {
+        font-size: 1.1rem;
+    }
+
+    .result-buttons {
+        flex-direction: column;
+    }
+
+    .result-button {
+        padding: 12px 25px;
+        font-size: 1rem;
+    }
+
+    .wrong-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* ==================== 排除障礙頁樣式 ==================== */
+/* 排除障礙頁目前未使用，保留樣式供未來擴展 */
+/*
+#troubleshootingSection {
+    position: relative;
+}
+
+.troubleshooting-container {
+    position: relative;
+    z-index: 1;
+}
+
+.troubleshooting-list {
+    display: grid;
+    gap: 16px;
+}
+
+.troubleshooting-item {
+    padding: 18px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.troubleshooting-item h3 {
+    margin-bottom: 10px;
+    color: #ffd166;
+}
+
+.troubleshooting-item p {
+    margin: 8px 0;
+    line-height: 1.7;
+}
+*/
+
+/* ==================== 統一按鈕樣式 ==================== */
+button {
+    font-family: inherit;
+    border: none;
+    border-radius: 999px;
+    padding: 12px 22px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+}
+
+button:hover:not(:disabled) {
+    transform: translateY(-2px);
+}
+
+button:active:not(:disabled) {
+    transform: translateY(1px);
+}
+
+button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+/* 主要按鈕 */
+#startGameButton,
+#submitAnswerButton,
+#retryLevelButton,
+#backToLevelsButton,
+#wrongPracticeButton {
+    background: linear-gradient(180deg, #ffd166, #ffb703);
+    color: #2b2100;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.22);
+}
+
+/* 返回、輔助按鈕 */
+#backHomeButton,
+.back-button {
+    background: rgba(255, 255, 255, 0.22);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.32);
+}

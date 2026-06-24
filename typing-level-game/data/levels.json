@@ -1,0 +1,22 @@
+{
+    "levels": [
+        {
+            "order": 1,
+            "title": "第一關：基礎動物",
+            "description": "學習基本動物單字",
+            "wordIds": [1, 2, 3],
+            "hearts": 5,
+            "timeLimit": 30,
+            "scorePerQuestion": 10
+        },
+        {
+            "order": 2,
+            "title": "第二關：進階動物",
+            "description": "學習更多動物單字",
+            "wordIds": [4, 5, 6],
+            "hearts": 5,
+            "timeLimit": 30,
+            "scorePerQuestion": 10
+        }
+    ]
+}

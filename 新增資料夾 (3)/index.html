@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Level Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 首頁區塊 -->
+        <section id="homeSection">
+            <div class="home-card">
+                <h1 class="game-title">英打闖關小英雄</h1>
+                <p class="game-subtitle">看中文，輸入英文，挑戰關卡！</p>
+                <button id="startGameButton" class="start-button">開始遊戲</button>
+            </div>
+        </section>
+
+        <!-- 關卡選單區塊 -->
+        <section id="levelSelectSection" class="hidden">
+            <div class="level-select-container">
+                <!-- 左上角返回首頁按鈕 -->
+                <button id="backHomeButton" class="back-button">返回首頁</button>
+
+                <!-- 中間大標題 -->
+                <h1 class="level-title">英打闖關小英雄</h1>
+
+                <!-- 標題下方文字 -->
+                <p class="level-subtitle">選擇關卡</p>
+
+                <!-- 星星總數進度條 -->
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                    <p class="progress-text">星星總數 <span id="progressText">0/60</span></p>
+                </div>
+
+                <!-- 清除進度按鈕（測試用） -->
+                <button id="resetProgressButton" class="reset-progress-button">清除進度</button>
+
+                <!-- 關卡格子容器 -->
+                <div id="levelGrid" class="level-grid">
+                    <!-- 關卡卡片將由 JavaScript 自動產生 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- 遊戲區塊 -->
+        <section id="gameSection" class="hidden">
+            <div class="game-container">
+                <!-- 左上角返回關卡選單按鈕 -->
+                <button id="backToLevelButton" class="back-button">返回關卡選單</button>
+
+                <!-- 關卡標題 -->
+                <h1 id="currentLevelTitle" class="game-level-title">第 1 關</h1>
+
+                <!-- 關卡說明 -->
+                <p id="currentLevelDescription" class="game-level-description">關卡說明</p>
+
+                <!-- 遊戲資訊欄 -->
+                <div class="game-info-bar">
+                    <div class="game-info-item">
+                        <span class="info-label">題目進度</span>
+                        <span id="questionProgress" class="info-value">1/20</span>
+                    </div>
+                    <div class="game-info-item">
+                        <span class="info-label">答對題數</span>
+                        <span id="currentScore" class="info-value">0</span>
+                    </div>
+                    <div class="game-info-item">
+                        <span class="info-label">愛心</span>
+                        <span id="currentHearts" class="info-value">❤️❤️❤️❤️❤️</span>
+                    </div>
+                    <div class="game-info-item">
+                        <span class="info-label">時間</span>
+                        <span id="timeRemaining" class="info-value">30</span>
+                    </div>
+                </div>
+
+                <!-- 題目卡片 -->
+                <div class="question-card">
+                    <p id="questionChinese" class="question-text">狗</p>
+                </div>
+
+                <!-- 錯題練習熟練度顯示 -->
+                <div id="practiceProgress" class="practice-progress hidden">
+                    <span class="practice-label">熟練度：</span>
+                    <span id="masteryCount" class="mastery-count">0/2</span>
+                    <span class="practice-remaining">（剩餘 <span id="remainingCount">0</span> 題）</span>
+                </div>
+
+                <!-- 播放發音按鈕 -->
+                <button id="speakButton" type="button" class="speak-button">播放發音 🔊</button>
+
+                <!-- 輸入區域 -->
+                <div class="input-area">
+                    <input type="text" id="answerInput" class="answer-input" placeholder="輸入英文答案" autocomplete="off">
+                    <button id="submitAnswerButton" class="submit-button">送出答案</button>
+                    <button id="hintButton" class="hint-button">提示一下</button>
+                </div>
+
+                <!-- 訊息顯示區域 -->
+                <div id="messageDisplay" class="message-display hidden"></div>
+
+                <!-- 答題結果提示 -->
+                <div id="answerFeedback" class="answer-feedback hidden"></div>
+
+                <!-- 提示區域 -->
+                <div id="hintArea" class="hint-area hidden">
+                    <p id="hintText" class="hint-text">提示：人類最好的朋友，會汪汪叫</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 結果區塊 -->
+        <section id="resultSection" class="hidden">
+            <div class="result-container">
+                <h1 class="result-title">本關完成</h1>
+                <p id="resultLevelTitle" class="result-level-title">第 1 關</p>
+                
+                <div class="result-stats">
+                    <div class="result-stat-item">
+                        <span class="result-stat-label">答對題數</span>
+                        <span id="resultScoreText" class="result-stat-value">19 / 20</span>
+                    </div>
+                    <div class="result-stat-item">
+                        <span class="result-stat-label">答錯題數</span>
+                        <span id="resultWrongText" class="result-stat-value">1 題</span>
+                    </div>
+                    <div class="result-stat-item">
+                        <span class="result-stat-label">答對率</span>
+                        <span id="resultAccuracyText" class="result-stat-value">95%</span>
+                    </div>
+                </div>
+
+                <div class="result-stars-container">
+                    <p class="result-stars-label">獲得星星</p>
+                    <div id="resultStars" class="result-stars">⭐⭐⭐</div>
+                </div>
+
+                <p id="resultPassText" class="result-pass-text pass-text">恭喜通關！下一關已解鎖！</p>
+
+                <div id="wrongListBox" class="wrong-list-box">
+                    <h3>錯題列表</h3>
+                    <div id="wrongList"></div>
+                </div>
+
+                <div class="result-buttons">
+                    <button id="wrongPracticeButton" type="button" class="result-button">錯題練習</button>
+                    <button id="backToLevelsButton" class="result-button">回到關卡選擇</button>
+                    <button id="retryLevelButton" class="result-button">重新挑戰</button>
+                </div>
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,802 @@
+[
+    {
+        "id": "dog",
+        "word": "dog",
+        "meaning": "狗",
+        "hint": "人類最好的朋友，會汪汪叫",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "cat",
+        "word": "cat",
+        "meaning": "貓",
+        "hint": "喜歡抓老鼠，會喵喵叫",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "bird",
+        "word": "bird",
+        "meaning": "鳥",
+        "hint": "會在天上飛，有翅膀",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "fish",
+        "word": "fish",
+        "meaning": "魚",
+        "hint": "住在水裡，用鰓呼吸",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "rabbit",
+        "word": "rabbit",
+        "meaning": "兔子",
+        "hint": "有長耳朵，喜歡吃胡蘿蔔",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "lion",
+        "word": "lion",
+        "meaning": "獅子",
+        "hint": "草原之王，有鬃毛",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "tiger",
+        "word": "tiger",
+        "meaning": "老虎",
+        "hint": "身上有條紋，是百獸之王",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "monkey",
+        "word": "monkey",
+        "meaning": "猴子",
+        "hint": "喜歡爬樹，吃香蕉",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "horse",
+        "word": "horse",
+        "meaning": "馬",
+        "hint": "可以騎，跑得很快",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "cow",
+        "word": "cow",
+        "meaning": "牛",
+        "hint": "會產牛奶，會哞哞叫",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "sheep",
+        "word": "sheep",
+        "meaning": "羊",
+        "hint": "身上有毛，會咩咩叫",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "pig",
+        "word": "pig",
+        "meaning": "豬",
+        "hint": "粉紅色，喜歡在泥巴裡打滾",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "duck",
+        "word": "duck",
+        "meaning": "鴨",
+        "hint": "有扁嘴巴，會嘎嘎叫",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "chicken",
+        "word": "chicken",
+        "meaning": "雞",
+        "hint": "會下蛋，有紅色的冠",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "bear",
+        "word": "bear",
+        "meaning": "熊",
+        "hint": "冬天會冬眠，很強壯",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "elephant",
+        "word": "elephant",
+        "meaning": "大象",
+        "hint": "有長鼻子，很大的動物",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "zebra",
+        "word": "zebra",
+        "meaning": "斑馬",
+        "hint": "身上有黑白條紋",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "frog",
+        "word": "frog",
+        "meaning": "青蛙",
+        "hint": "綠色，會跳，住在水邊",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "mouse",
+        "word": "mouse",
+        "meaning": "老鼠",
+        "hint": "很小，會吱吱叫",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "panda",
+        "word": "panda",
+        "meaning": "貓熊",
+        "hint": "黑白相間，喜歡吃竹子",
+        "category": "動物",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "apple",
+        "word": "apple",
+        "meaning": "蘋果",
+        "hint": "紅色或綠色，一天一蘋果醫生遠離我",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "banana",
+        "word": "banana",
+        "meaning": "香蕉",
+        "hint": "黃色，彎彎的，猴子喜歡吃",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "orange",
+        "word": "orange",
+        "meaning": "橘子",
+        "hint": "橙色，圓圓的，富含維生素C",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "grape",
+        "word": "grape",
+        "meaning": "葡萄",
+        "hint": "紫色，一串一串的",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "watermelon",
+        "word": "watermelon",
+        "meaning": "西瓜",
+        "hint": "夏天最愛，外面綠裡面紅",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "mango",
+        "word": "mango",
+        "meaning": "芒果",
+        "hint": "黃色，甜甜的，夏天水果",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "lemon",
+        "word": "lemon",
+        "meaning": "檸檬",
+        "hint": "黃色，很酸，可以做檸檬水",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "peach",
+        "word": "peach",
+        "meaning": "桃子",
+        "hint": "粉紅色，有毛，甜甜的",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "pear",
+        "word": "pear",
+        "meaning": "梨子",
+        "hint": "黃色，形狀像燈泡",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "cherry",
+        "word": "cherry",
+        "meaning": "櫻桃",
+        "hint": "紅色，小小的，很貴",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "pineapple",
+        "word": "pineapple",
+        "meaning": "鳳梨",
+        "hint": "黃色，外面有刺，台灣特產",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "strawberry",
+        "word": "strawberry",
+        "meaning": "草莓",
+        "hint": "紅色，有籽，形狀像心",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "kiwi",
+        "word": "kiwi",
+        "meaning": "奇異果",
+        "hint": "棕色毛皮，綠色果肉",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "melon",
+        "word": "melon",
+        "meaning": "甜瓜",
+        "hint": "黃色或綠色，甜甜的",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "papaya",
+        "word": "papaya",
+        "meaning": "木瓜",
+        "hint": "黃色，裡面有黑籽",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "coconut",
+        "word": "coconut",
+        "meaning": "椰子",
+        "hint": "棕色，有硬殼，裡面有水",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "plum",
+        "word": "plum",
+        "meaning": "李子",
+        "hint": "紫色或紅色，小小的",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "guava",
+        "word": "guava",
+        "meaning": "芭樂",
+        "hint": "綠色，台灣常見水果",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "tomato",
+        "word": "tomato",
+        "meaning": "番茄",
+        "hint": "紅色，可以做番茄醬",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "blueberry",
+        "word": "blueberry",
+        "meaning": "藍莓",
+        "hint": "藍色，小小的，對眼睛好",
+        "category": "水果",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "book",
+        "word": "book",
+        "meaning": "書",
+        "hint": "可以讀的，有很多頁",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "pen",
+        "word": "pen",
+        "meaning": "原子筆",
+        "hint": "寫字用的，有墨水",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "pencil",
+        "word": "pencil",
+        "meaning": "鉛筆",
+        "hint": "可以削，寫字會變淡",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "eraser",
+        "word": "eraser",
+        "meaning": "橡皮擦",
+        "hint": "擦掉寫錯的字",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "ruler",
+        "word": "ruler",
+        "meaning": "尺",
+        "hint": "量長度用的，有刻度",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "bag",
+        "word": "bag",
+        "meaning": "書包",
+        "hint": "裝書和文具的",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "desk",
+        "word": "desk",
+        "meaning": "書桌",
+        "hint": "讀書寫字用的桌子",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "chair",
+        "word": "chair",
+        "meaning": "椅子",
+        "hint": "坐的，有四條腿",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "teacher",
+        "word": "teacher",
+        "meaning": "老師",
+        "hint": "教學生的人",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "student",
+        "word": "student",
+        "meaning": "學生",
+        "hint": "上學學習的人",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "school",
+        "word": "school",
+        "meaning": "學校",
+        "hint": "學習的地方",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "classroom",
+        "word": "classroom",
+        "meaning": "教室",
+        "hint": "上課的房間",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "blackboard",
+        "word": "blackboard",
+        "meaning": "黑板",
+        "hint": "老師寫字用的，通常是黑色",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "notebook",
+        "word": "notebook",
+        "meaning": "筆記本",
+        "hint": "記筆記用的",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "paper",
+        "word": "paper",
+        "meaning": "紙",
+        "hint": "寫字用的，白色薄薄的",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "glue",
+        "word": "glue",
+        "meaning": "膠水",
+        "hint": "黏東西用的",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "scissors",
+        "word": "scissors",
+        "meaning": "剪刀",
+        "hint": "剪紙用的，有兩片刀刃",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "crayon",
+        "word": "crayon",
+        "meaning": "蠟筆",
+        "hint": "畫圖用的，有很多顏色",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "marker",
+        "word": "marker",
+        "meaning": "麥克筆",
+        "hint": "粗筆，顏色很鮮豔",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "computer",
+        "word": "computer",
+        "meaning": "電腦",
+        "hint": "可以上網、打字、玩遊戲",
+        "category": "學校",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "red",
+        "word": "red",
+        "meaning": "紅色",
+        "hint": "蘋果和消防車的顏色",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "blue",
+        "word": "blue",
+        "meaning": "藍色",
+        "hint": "天空和海洋的顏色",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "green",
+        "word": "green",
+        "meaning": "綠色",
+        "hint": "草地和樹葉的顏色",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "yellow",
+        "word": "yellow",
+        "meaning": "黃色",
+        "hint": "香蕉和太陽的顏色",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "black",
+        "word": "black",
+        "meaning": "黑色",
+        "hint": "頭髮和夜晚的顏色",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "white",
+        "word": "white",
+        "meaning": "白色",
+        "hint": "雲和雪的顏色",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "pink",
+        "word": "pink",
+        "meaning": "粉紅色",
+        "hint": "櫻花和草莓的顏色",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "purple",
+        "word": "purple",
+        "meaning": "紫色",
+        "hint": "葡萄和茄子的顏色",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "brown",
+        "word": "brown",
+        "meaning": "棕色",
+        "hint": "巧克力和木頭的顏色",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "gray",
+        "word": "gray",
+        "meaning": "灰色",
+        "hint": "大象和石頭的顏色",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "one",
+        "word": "one",
+        "meaning": "一",
+        "hint": "數字的第一個",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "two",
+        "word": "two",
+        "meaning": "二",
+        "hint": "一加一等於幾",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "three",
+        "word": "three",
+        "meaning": "三",
+        "hint": "三角形有幾個角",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "four",
+        "word": "four",
+        "meaning": "四",
+        "hint": "一年有幾季",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "five",
+        "word": "five",
+        "meaning": "五",
+        "hint": "一隻手有幾根手指",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "six",
+        "word": "six",
+        "meaning": "六",
+        "hint": "骰子最大的一面",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "seven",
+        "word": "seven",
+        "meaning": "七",
+        "hint": "一週有幾天",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "eight",
+        "word": "eight",
+        "meaning": "八",
+        "hint": "章魚有幾條腿",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "nine",
+        "word": "nine",
+        "meaning": "九",
+        "hint": "十減一等於幾",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "ten",
+        "word": "ten",
+        "meaning": "十",
+        "hint": "兩隻手的手指總數",
+        "category": "顏色數字",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "run",
+        "word": "run",
+        "meaning": "跑",
+        "hint": "比走快的動作",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "walk",
+        "word": "walk",
+        "meaning": "走",
+        "hint": "用腳移動，比跑慢",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "jump",
+        "word": "jump",
+        "meaning": "跳",
+        "hint": "雙腳離地向上",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "read",
+        "word": "read",
+        "meaning": "讀",
+        "hint": "看書的動作",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "write",
+        "word": "write",
+        "meaning": "寫",
+        "hint": "用筆寫字的動作",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "eat",
+        "word": "eat",
+        "meaning": "吃",
+        "hint": "把食物放進嘴裡",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "drink",
+        "word": "drink",
+        "meaning": "喝",
+        "hint": "喝水的動作",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "sleep",
+        "word": "sleep",
+        "meaning": "睡覺",
+        "hint": "晚上閉眼睛休息",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "play",
+        "word": "play",
+        "meaning": "玩",
+        "hint": "做遊戲或運動",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "sing",
+        "word": "sing",
+        "meaning": "唱歌",
+        "hint": "發出美妙的聲音",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "dance",
+        "word": "dance",
+        "meaning": "跳舞",
+        "hint": "隨著音樂移動身體",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "swim",
+        "word": "swim",
+        "meaning": "游泳",
+        "hint": "在水裡移動",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "open",
+        "word": "open",
+        "meaning": "打開",
+        "hint": "把關閉的東西打開",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "close",
+        "word": "close",
+        "meaning": "關上",
+        "hint": "把打開的東西關上",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "look",
+        "word": "look",
+        "meaning": "看",
+        "hint": "用眼睛觀察",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "listen",
+        "word": "listen",
+        "meaning": "聽",
+        "hint": "用耳朵接收聲音",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "speak",
+        "word": "speak",
+        "meaning": "說",
+        "hint": "用嘴巴說話",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "wash",
+        "word": "wash",
+        "meaning": "洗",
+        "hint": "用水清潔",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "cook",
+        "word": "cook",
+        "meaning": "煮",
+        "hint": "做飯的動作",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    },
+    {
+        "id": "study",
+        "word": "study",
+        "meaning": "學習",
+        "hint": "讀書學習新知識",
+        "category": "動作生活",
+        "difficulty": "簡單"
+    }
+]

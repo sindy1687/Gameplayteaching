@@ -1,0 +1,20 @@
+[
+    {
+        "id": 1,
+        "word": "dog",
+        "meaning": "狗",
+        "hint": "人類最好的朋友"
+    },
+    {
+        "id": 2,
+        "word": "cat",
+        "meaning": "貓",
+        "hint": "喜歡抓老鼠的動物"
+    },
+    {
+        "id": 3,
+        "word": "bird",
+        "meaning": "鳥",
+        "hint": "會飛的動物"
+    }
+]

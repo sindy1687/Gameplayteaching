@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英打闖關遊戲教學</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 首頁 -->
+        <div id="homepage" class="page active">
+            <div class="header">
+                <h1 class="title">英打闖關遊戲教學</h1>
+                <p class="subtitle">一步一步教你建立自己的英打闖關遊戲</p>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="搜尋教學...">
+            </div>
+            
+            <div id="tutorialCategories" class="tutorial-categories">
+                <!-- 教學分類卡片將由 JavaScript 自動產生 -->
+            </div>
+        </div>
+
+        <!-- 教學內容頁 -->
+        <div id="tutorialPage" class="page">
+            <div class="tutorial-content">
+                <button id="backButton" class="back-button">← 返回首頁</button>
+                <div id="tutorialDetail" class="tutorial-detail">
+                    <!-- 教學詳細內容將由 JavaScript 自動產生 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 圖片放大模態框 -->
+    <div id="imageModal" class="image-modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-content" id="modalImage" alt="放大圖片">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
