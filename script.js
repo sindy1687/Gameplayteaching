@@ -2323,686 +2323,641 @@ updateProgressAfterLevel()
     {
         id: "typing-game-wrong-practice",
         category: "英打遊戲教學",
-        title: "第十步：加入結算畫面與錯題練習（連續答對2次才算熟練）",
-        description: "在結算畫面加入錯題練習功能，每個錯題都要連續答對2次才算熟練，讓學生真正記住單字。",
+        title: "第十步：加入愛心系統與時間倒數系統",
+        description: "在英打闖關遊戲中加入愛心與時間限制。玩家每一關有 3 顆愛心，答錯會扣愛心；每一關有倒數時間，時間到或愛心歸 0 就挑戰失敗。",
         target: "適合想要了解錯題練習功能的初學者。",
         steps: [
-            "加入錯題資料記錄變數（含熟練度）",
-            "答錯時記錄錯題",
-            "補強 index.html 結算畫面",
-            "修改 finishLevel() 結算畫面顯示",
-            "建立 renderWrongList()",
-            "加入錯題練習按鈕功能",
-            "實作連續答對2次邏輯",
-            "錯題練習模式完成後的結算",
-            "加入 CSS 樣式"
+            "加入愛心系統規則",
+            "加入時間倒數系統規則",
+            "讓 levels.json 支援自訂時間與愛心",
+            "在 index.html 新增狀態列",
+            "在 script.js 新增狀態變數",
+            "建立愛心顯示功能",
+            "建立時間格式與顯示功能",
+            "建立開始與停止倒數功能",
+            "開始關卡時初始化愛心與時間",
+            "答錯時扣愛心",
+            "建立愛心歸 0 與時間到結束功能",
+            "修改 finishLevel() 處理三種結束原因",
+            "錯題練習模式的愛心與時間",
+            "切換畫面時停止倒數",
+            "加入愛心與時間 CSS 樣式"
         ],
-        code: `第十步：加入結算畫面與錯題練習（連續答對2次才算熟練）
+        code: `第十步：加入愛心系統與時間倒數系統
 
 這一步要做什麼：
 
-在結算畫面加入「錯題練習」功能。
-每個錯題都要連續答對2次才算熟練，讓學生真正記住單字。
+這一步要幫英打闖關遊戲加入愛心與時間限制。玩家每一關有 3 顆愛心，答錯會扣愛心；每一關有倒數時間，時間到或愛心歸 0 就挑戰失敗。
 
 ---
 
-## 設計理念
+## 可以直接貼給 Windsurf 的指令
 
-錯題練習不要只做「再打一遍」，要設計成比較像教學遊戲，讓學生真的記住。
+請幫我在英打闖關遊戲中加入：
 
-**操作流程：**
+1. 愛心系統
+2. 時間倒數系統
 
-玩家完成關卡
-↓
-結算畫面顯示錯題列表
-↓
-點「錯題練習」
-↓
-進入錯題練習模式
-↓
-畫面顯示中文
-↓
-學生輸入英文
-↓
-答對：熟練次數 +1
-↓
-答錯：熟練次數歸 0
-↓
-每個錯題連續答對 2 次後移除
-↓
-全部錯題都熟練
-↓
-顯示「錯題練習完成」
+請不要重建專案。
+請不要刪除原本功能。
+請不要改變原本關卡資料邏輯。
+請不要修改 words.json 和 levels.json 的格式。
+請只加入愛心、倒數時間，以及相關畫面顯示。
 
-**錯題練習畫面：**
+目前專案架構是：
 
-錯題練習：第 1 關 寵物單字
+typing-level-game/
+├── index.html
+├── style.css
+├── script.js
+├── data/
+│   ├── words.json
+│   └── levels.json
+├── sounds/
+│   └── 打字.MP3
+└── images/
+    └── background.png
 
-剩餘錯題：3 題
-目前單字熟練度：1 / 2
+目前已經有功能：
 
-中文：
-狗
+1. 首頁
+2. 關卡選擇
+3. 讀取 words.json
+4. 讀取 levels.json
+5. 星星評分
+6. 星星總數進度條
+7. 關卡解鎖
+8. 發音功能
+9. 打字音效
+10. 結算畫面
+11. 錯題練習
+12. 排除障礙區塊
 
-[播放發音]
+請保留以上功能。
 
-請輸入英文：
-_________
+一、愛心系統規則
 
-[送出答案]
+1. 每一關開始時有 3 顆愛心。
+2. 答錯一題扣 1 顆愛心。
+3. 答對不扣愛心。
+4. 愛心歸 0 時，本關立即結束。
+5. 愛心歸 0 時，不通關。
+6. 愛心歸 0 時，星星為 0。
+7. 愛心歸 0 時，不解鎖下一關。
+8. 愛心歸 0 時，仍然進入結算畫面。
+9. 結算畫面要顯示：
+挑戰失敗，愛心用完了！
 
-答對時：
-答對了！
-熟練度 1 / 2
+愛心顯示方式請使用：
 
-再次答對：
-太棒了！這個單字已熟練
+❤️❤️❤️
+❤️❤️♡
+❤️♡♡
+♡♡♡
 
-答錯時：
-答錯了，正確答案是 dog
-熟練度歸 0，再練一次
+二、時間倒數系統規則
 
----
+1. 每一關有倒數時間。
+2. 預設每一關 120 秒。
+3. 遊戲開始後開始倒數。
+4. 每秒更新一次畫面。
+5. 時間到時，本關立即結束。
+6. 時間到時，不通關。
+7. 時間到時，星星為 0。
+8. 時間到時，不解鎖下一關。
+9. 時間到時，仍然進入結算畫面。
+10. 結算畫面要顯示：
+挑戰失敗，時間到了！
 
-## 直接貼給 Windsurf 的指令
+時間顯示格式：
 
-請幫我把錯題練習設計成「連續答對 2 次才算熟練」的模式。
+02:00
+01:59
+01:58
 
-需求：
+時間少於 10 秒時，請加上警示樣式，例如變紅或閃爍。
 
-1. 正常關卡完成後，結算畫面顯示錯題列表。
-2. 如果有錯題，顯示「錯題練習」按鈕。
-3. 點擊錯題練習後，只練習剛剛答錯的題目。
-4. 每個錯題都要連續答對 2 次才算熟練。
-5. 答對一次，該題熟練度 +1。
-6. 答錯時，該題熟練度歸 0。
-7. 熟練度達到 2/2 時，該題從錯題練習中移除。
-8. 畫面要顯示：
-   - 剩餘錯題數
-   - 目前題目熟練度
-   - 中文題目
-   - 英文輸入框
-   - 播放發音按鈕
-9. 全部錯題都熟練後，顯示「錯題練習完成」。
-10. 錯題練習不更新星星。
-11. 錯題練習不解鎖下一關。
-12. 錯題練習不覆蓋原本成績。
-13. 保留原本重新挑戰與回到關卡選擇功能。
+三、levels.json 支援自訂時間與愛心
 
-==================================================
-一、錯題資料記錄（含熟練度）
-==================================================
-
-請在 script.js 加入錯題陣列：
-
-let wrongQuestions = [];
-let isWrongPracticeMode = false;
-
-用途：
-
-1. wrongQuestions 用來存本關答錯的題目。
-2. isWrongPracticeMode 用來判斷目前是不是錯題練習模式。
-
-每個錯題物件要包含：
+請讓程式支援以下欄位：
 
 {
-  id: "dog",
-  english: "dog",
-  chinese: "狗",
-  masteryCount: 0,
-  requiredMastery: 2
+  "level": 1,
+  "title": "第 1 關：寵物單字",
+  "category": "pet",
+  "questionCount": 20,
+  "timeLimit": 120,
+  "heartLimit": 3
 }
 
-masteryCount：目前熟練次數
-requiredMastery：需要熟練次數（固定為2）
+如果 levels.json 沒有 timeLimit，就預設 120 秒。
 
-每次開始正常關卡時，要清空 wrongQuestions。
+如果 levels.json 沒有 heartLimit，就預設 3 顆愛心。
 
-startLevel(levelData) 裡請加入：
+請使用：
 
-wrongQuestions = [];
-isWrongPracticeMode = false;
+const timeLimit = currentLevel.timeLimit || 120;
+const heartLimit = currentLevel.heartLimit || 3;
 
-==================================================
-二、答錯時記錄錯題
-==================================================
+四、index.html 新增畫面元素
+
+請在 gameSection 裡新增狀態列。
+
+放在 currentLevelTitle 下方，questionProgress 上方。
+
+請加入：
+
+<div class="game-status-bar">
+  <div id="heartDisplay" class="heart-display">❤️❤️❤️</div>
+  <div id="timerDisplay" class="timer-display">02:00</div>
+</div>
+
+注意：
+
+1. heartDisplay 顯示愛心。
+2. timerDisplay 顯示倒數時間。
+3. 不要刪除原本發音按鈕。
+4. 不要刪除原本輸入框。
+5. 不要刪除原本答題提示。
+
+五、script.js 新增狀態變數
+
+請在 script.js 上方遊戲狀態變數區加入：
+
+let heartLimit = 3;
+let currentHearts = 3;
+
+let timeLimit = 120;
+let remainingTime = 120;
+let timerInterval = null;
+
+let levelEndReason = "completed";
+let isLevelActive = false;
+
+用途說明：
+
+1. heartLimit：本關最大愛心數。
+2. currentHearts：目前剩餘愛心。
+3. timeLimit：本關總秒數。
+4. remainingTime：目前剩餘秒數。
+5. timerInterval：倒數計時器。
+6. levelEndReason：結束原因。
+   - completed：完成所有題目
+   - no-hearts：愛心用完
+   - timeout：時間到了
+7. isLevelActive：避免關卡結束後還能繼續送出答案。
+
+六、建立愛心顯示功能
+
+請新增：
+
+function updateHeartDisplay() {
+  const heartDisplay = document.getElementById("heartDisplay");
+  if (!heartDisplay) return;
+
+  let heartsText = "";
+
+  for (let i = 1; i <= heartLimit; i++) {
+    heartsText += i <= currentHearts ? "❤️" : "♡";
+  }
+
+  heartDisplay.textContent = heartsText;
+}
+
+七、建立時間格式功能
+
+請新增：
+
+function formatTime(seconds) {
+  const safeSeconds = Math.max(0, Number(seconds) || 0);
+  const minutes = Math.floor(safeSeconds / 60);
+  const secs = safeSeconds % 60;
+
+  return \`\${String(minutes).padStart(2, "0")}:\${String(secs).padStart(2, "0")}\`;
+}
+
+八、建立時間顯示功能
+
+請新增：
+
+function updateTimerDisplay() {
+  const timerDisplay = document.getElementById("timerDisplay");
+  if (!timerDisplay) return;
+
+  timerDisplay.textContent = formatTime(remainingTime);
+
+  if (remainingTime <= 10) {
+    timerDisplay.classList.add("timer-warning");
+  } else {
+    timerDisplay.classList.remove("timer-warning");
+  }
+}
+
+九、建立開始倒數功能
+
+請新增：
+
+function startTimer() {
+  stopTimer();
+
+  updateTimerDisplay();
+
+  timerInterval = setInterval(() => {
+    if (!isLevelActive) {
+      stopTimer();
+      return;
+    }
+
+    remainingTime--;
+
+    updateTimerDisplay();
+
+    if (remainingTime <= 0) {
+      remainingTime = 0;
+      updateTimerDisplay();
+      stopTimer();
+      endLevelByTimeout();
+    }
+  }, 1000);
+}
+
+十、建立停止倒數功能
+
+請新增：
+
+function stopTimer() {
+  if (timerInterval) {
+    clearInterval(timerInterval);
+    timerInterval = null;
+  }
+}
+
+注意：
+
+1. 完成關卡時要 stopTimer()。
+2. 愛心歸 0 時要 stopTimer()。
+3. 重新挑戰時要 stopTimer() 再重新開始。
+4. 回關卡選擇時要 stopTimer()。
+5. 回首頁時要 stopTimer()。
+
+十一、開始關卡時初始化愛心與時間
+
+請修改 startLevel(levelData)。
+
+開始正常關卡時，請加入：
+
+heartLimit = Number(levelData.heartLimit) || 3;
+currentHearts = heartLimit;
+
+timeLimit = Number(levelData.timeLimit) || 120;
+remainingTime = timeLimit;
+
+levelEndReason = "completed";
+isLevelActive = true;
+
+updateHeartDisplay();
+updateTimerDisplay();
+startTimer();
+
+請依照目前專案原本 startLevel 寫法整合，不要把原本讀題功能弄壞。
+
+十二、答錯時扣愛心
 
 請修改 submitAnswer()。
 
-當玩家答錯時，除了 wrongCount + 1，也要把目前題目存進 wrongQuestions。
+答錯時：
 
-請注意：
-
-1. 不要重複加入同一題。
-2. 錯題資料要包含 english、chinese、category。
-3. 如果 words.json 裡有 id，也要保留 id。
-4. 初始熟練度設為 0。
+1. wrongCount + 1
+2. 記錄 wrongQuestions
+3. currentHearts - 1
+4. updateHeartDisplay()
+5. 如果 currentHearts <= 0，立即結束關卡
 
 範例邏輯：
 
 if (!isCorrect) {
   wrongCount++;
+  currentHearts = Math.max(0, currentHearts - 1);
+  updateHeartDisplay();
 
-  const alreadyExists = wrongQuestions.some((item) => {
-    return item.id
-      ? item.id === currentQuestion.id
-      : item.english === currentQuestion.english;
-  });
+  // 原本錯題記錄保留
 
-  if (!alreadyExists) {
-    wrongQuestions.push({
-      ...currentQuestion,
-      masteryCount: 0,
-      requiredMastery: 2
-    });
+  if (currentHearts <= 0) {
+    endLevelByNoHearts();
+    return;
   }
 }
 
-==================================================
-三、index.html 結算畫面補強
-==================================================
-
-請確認 resultSection 裡有以下元素。
-
-如果沒有，請補上：
-
-<section id="resultSection" class="hidden">
-  <div class="result-card">
-    <h2>本關完成</h2>
-
-    <p id="resultLevelTitle"></p>
-    <p id="resultScoreText"></p>
-    <p id="resultWrongText"></p>
-    <p id="resultAccuracyText"></p>
-
-    <div id="resultStars" class="result-stars"></div>
-    <p id="resultPassText"></p>
-
-    <div id="wrongListBox" class="wrong-list-box">
-      <h3>錯題列表</h3>
-      <div id="wrongList"></div>
-    </div>
-
-    <div class="result-buttons">
-      <button id="wrongPracticeButton" type="button">錯題練習</button>
-      <button id="retryLevelButton" type="button">重新挑戰</button>
-      <button id="backToLevelsButton" type="button">回到關卡選擇</button>
-    </div>
-  </div>
-</section>
-
 注意：
 
-1. resultWrongText 顯示答錯題數。
-2. wrongListBox 顯示錯題區。
-3. wrongList 顯示錯題內容。
-4. wrongPracticeButton 是錯題練習按鈕。
-5. 不要刪除原本結果畫面的星星與通關資料。
+1. 愛心歸 0 時，不要再進下一題。
+2. 愛心歸 0 時，不要再 showQuestion()。
+3. 愛心歸 0 時，要直接進結算畫面。
+4. 答對不回復愛心，先不要加補血功能。
 
-==================================================
-四、finishLevel() 結算畫面顯示
-==================================================
+十三、送出答案防呆
 
-請修改 finishLevel()。
+請在 submitAnswer() 一開始加：
 
-完成關卡後，要顯示：
+if (!isLevelActive) return;
 
-1. 關卡名稱
-2. 答對題數
-3. 答錯題數
-4. 答對率
-5. 星星
-6. 通關結果
-7. 錯題列表
-8. 錯題練習按鈕是否顯示
+if (!currentQuestions || currentQuestions.length === 0) return;
 
-範例顯示：
+空白答案不要扣愛心。
 
-本關完成：第 1 關：寵物單字
+十四、建立愛心歸 0 結束功能
 
-答對題數：
-18 / 20
+請新增：
 
-答錯題數：
-2 題
+function endLevelByNoHearts() {
+  if (!isLevelActive) return;
 
-答對率：
-90%
+  levelEndReason = "no-hearts";
+  isLevelActive = false;
+  stopTimer();
 
-本次獲得：
-⭐⭐
+  const answerFeedback = document.getElementById("answerFeedback");
+  if (answerFeedback) {
+    answerFeedback.textContent = "挑戰失敗，愛心用完了！";
+  }
 
-通關結果：
+  finishLevel();
+}
+
+十五、建立時間到結束功能
+
+請新增：
+
+function endLevelByTimeout() {
+  if (!isLevelActive) return;
+
+  levelEndReason = "timeout";
+  isLevelActive = false;
+  stopTimer();
+
+  const answerFeedback = document.getElementById("answerFeedback");
+  if (answerFeedback) {
+    answerFeedback.textContent = "挑戰失敗，時間到了！";
+  }
+
+  finishLevel();
+}
+
+十六、完成所有題目時停止倒數
+
+請修改 showQuestion() 或 finishLevel()。
+
+當所有題目答完進入 finishLevel() 時：
+
+1. levelEndReason = "completed";
+2. isLevelActive = false;
+3. stopTimer();
+
+如果是正常完成所有題目，才依照答對率給星星。
+
+如果是 no-hearts 或 timeout，星星一定是 0。
+
+十七、修改 finishLevel()
+
+finishLevel() 要能處理三種結束原因：
+
+1. completed：正常完成所有題目
+2. no-hearts：愛心用完
+3. timeout：時間到了
+
+請加入邏輯：
+
+let stars = 0;
+let isPassed = false;
+
+if (levelEndReason === "completed") {
+  if (accuracy >= 95) {
+    stars = 3;
+  } else if (accuracy >= 80) {
+    stars = 2;
+  } else if (accuracy >= 75) {
+    stars = 1;
+  } else {
+    stars = 0;
+  }
+
+  isPassed = stars >= 1;
+} else {
+  stars = 0;
+  isPassed = false;
+}
+
+如果 levelEndReason 是 no-hearts：
+
+resultPassText 顯示：
+
+挑戰失敗，愛心用完了！
+
+如果 levelEndReason 是 timeout：
+
+resultPassText 顯示：
+
+挑戰失敗，時間到了！
+
+如果 completed 但 stars >= 1：
+
+resultPassText 顯示：
+
 恭喜通關！
 
-錯題列表：
-1. 狗 dog
-2. 貓 cat
+如果 completed 但 stars === 0：
 
-如果沒有錯題：
+resultPassText 顯示：
 
-錯題列表：
-太棒了，沒有錯題！
-
-錯題練習按鈕要隱藏或 disabled。
-
-==================================================
-五、建立 renderWrongList()
-==================================================
-
-請在 script.js 建立：
-
-function renderWrongList() {
-  const wrongList = document.getElementById("wrongList");
-  const wrongListBox = document.getElementById("wrongListBox");
-  const wrongPracticeButton = document.getElementById("wrongPracticeButton");
-
-  if (!wrongList || !wrongListBox || !wrongPracticeButton) return;
-
-  if (!wrongQuestions || wrongQuestions.length === 0) {
-    wrongList.innerHTML = \`<p class="no-wrong-text">太棒了，沒有錯題！</p>\`;
-    wrongPracticeButton.disabled = true;
-    wrongPracticeButton.classList.add("disabled");
-    return;
-  }
-
-  wrongPracticeButton.disabled = false;
-  wrongPracticeButton.classList.remove("disabled");
-
-  wrongList.innerHTML = wrongQuestions.map((item, index) => {
-    return \`
-      <div class="wrong-item">
-        <span class="wrong-number">\${index + 1}.</span>
-        <span class="wrong-chinese">\${item.chinese}</span>
-        <span class="wrong-answer">\${item.english}</span>
-      </div>
-    \`;
-  }).join("");
-}
+還沒有通關，再挑戰一次！
 
 注意：
 
-1. 沒有錯題時顯示「太棒了，沒有錯題！」。
-2. 沒有錯題時，錯題練習按鈕不能點。
-3. 有錯題時，顯示錯題中文與正確英文。
-4. 請保留 UTF-8，不要讓中文亂碼。
+1. no-hearts 不更新星星。
+2. timeout 不更新星星。
+3. no-hearts 不解鎖下一關。
+4. timeout 不解鎖下一關。
+5. 錯題練習不更新星星。
+6. 錯題練習不解鎖下一關。
 
-==================================================
-六、加入錯題練習按鈕功能
-==================================================
+十八、錯題練習模式的愛心與時間
 
-請幫 wrongPracticeButton 加上 click 事件。
+請讓錯題練習也可以顯示愛心與時間，但不影響星星。
 
-點擊後：
+錯題練習建議規則：
 
-1. 如果 wrongQuestions.length === 0，就不動作。
-2. 把 currentQuestions 設定成 wrongQuestions 的隨機順序。
-3. currentQuestionIndex = 0。
-4. correctCount = 0。
-5. wrongCount = 0。
-6. isWrongPracticeMode = true。
-7. 隱藏 resultSection。
-8. 顯示 gameSection。
-9. currentLevelTitle 顯示：
-錯題練習：原本關卡名稱
+1. 錯題練習有 3 顆愛心。
+2. 錯題練習時間為 60 秒。
+3. 錯題練習愛心歸 0，顯示錯題練習失敗。
+4. 錯題練習時間到，顯示錯題練習時間到。
+5. 錯題練習完成，不更新星星、不解鎖關卡。
 
-10. 顯示第一題。
+請在 startWrongPractice() 裡加入：
 
-請建立功能：
+heartLimit = 3;
+currentHearts = heartLimit;
 
-function startWrongPractice() {
-  if (!wrongQuestions || wrongQuestions.length === 0) {
-    alert("目前沒有錯題可以練習。");
-    return;
-  }
+timeLimit = 60;
+remainingTime = timeLimit;
 
-  isWrongPracticeMode = true;
-  currentQuestions = shuffleArray([...wrongQuestions]);
-  currentQuestionIndex = 0;
-  correctCount = 0;
-  wrongCount = 0;
+levelEndReason = "completed";
+isLevelActive = true;
 
-  document.getElementById("resultSection").classList.add("hidden");
-  document.getElementById("gameSection").classList.remove("hidden");
+updateHeartDisplay();
+updateTimerDisplay();
+startTimer();
 
-  const currentLevelTitle = document.getElementById("currentLevelTitle");
-  if (currentLevelTitle) {
-    currentLevelTitle.textContent = \`錯題練習：\${currentLevel.title}\`;
-  }
+十九、切換畫面時停止倒數
 
-  showQuestion();
-}
+請檢查以下功能，加入 stopTimer()：
 
-==================================================
-七、實作連續答對2次邏輯
-==================================================
+1. goHome()
+2. backToLevelsButton 點擊
+3. resetProgress()
+4. retryLevelButton 點擊前
+5. startLevel() 開頭
+6. startWrongPractice() 開頭
 
-請修改 showQuestion()。
+二十、style.css 新增愛心與時間樣式
 
-在錯題練習模式下，要顯示：
+請加入：
 
-1. 剩餘錯題數
-2. 目前題目熟練度
-
-請在 showQuestion() 加入：
-
-if (isWrongPracticeMode) {
-  const remainingWrong = wrongQuestions.filter(q => q.masteryCount < q.requiredMastery).length;
-  const currentWrong = currentQuestions[currentQuestionIndex];
-  const masteryText = \`熟練度：\${currentWrong.masteryCount} / \${currentWrong.requiredMastery}\`;
-
-  // 顯示剩餘錯題數
-  // 顯示目前題目熟練度
-}
-
-請修改 checkAnswer()。
-
-在錯題練習模式下：
-
-答對時：
-1. 該題熟練度 +1
-2. 顯示：答對了！熟練度 1 / 2
-3. 如果熟練度達到 2/2：
-   - 顯示：太棒了！這個單字已熟練
-   - 該題從 wrongQuestions 移除
-   - 顯示下一題
-
-答錯時：
-1. 該題熟練度歸 0
-2. 顯示：答錯了，正確答案是 dog，熟練度歸 0，再練一次
-
-範例邏輯：
-
-if (isWrongPracticeMode) {
-  const currentWrong = currentQuestions[currentQuestionIndex];
-
-  if (isCorrect) {
-    currentWrong.masteryCount++;
-
-    if (currentWrong.masteryCount >= currentWrong.requiredMastery) {
-      // 從 wrongQuestions 移除
-      const index = wrongQuestions.findIndex(q => q.id === currentWrong.id);
-      if (index > -1) {
-        wrongQuestions.splice(index, 1);
-      }
-
-      // 顯示下一題
-      nextQuestion();
-    } else {
-      // 顯示：答對了！熟練度 1 / 2
-      // 清空輸入框，讓學生再答一次
-    }
-  } else {
-    currentWrong.masteryCount = 0;
-    // 顯示：答錯了，正確答案是 dog，熟練度歸 0，再練一次
-  }
-}
-
-==================================================
-八、錯題練習模式完成後的結算
-==================================================
-
-請修改 finishLevel()。
-
-如果 isWrongPracticeMode === true，結算畫面要改成「錯題練習完成」。
-
-錯題練習完成時：
-
-1. 不要重新計算原關卡星星。
-2. 不要更新 localStorage 的星星紀錄。
-3. 不要解鎖下一關。
-4. 不要影響原本通關進度。
-5. 只顯示錯題練習結果。
-
-顯示範例：
-
-錯題練習完成
-
-練習題數：
-2 題
-
-全部熟練：
-是
-
-通關結果：
-錯題練習完成，可以回到關卡選擇或重新挑戰原關卡。
-
-錯題練習模式下：
-
-1. resultStars 可以顯示：
-錯題練習不計算星星
-
-2. wrongPracticeButton 可以隱藏或 disabled。
-3. retryLevelButton 仍然可以重新挑戰原本關卡。
-4. backToLevelsButton 可以回到關卡選擇。
-
-==================================================
-九、錯題練習時不要覆蓋 wrongQuestions
-==================================================
-
-重要：
-
-正常關卡答錯時，可以加入 wrongQuestions。
-
-但是錯題練習模式中，不要把錯題練習答錯的題目重新洗掉或造成資料錯亂。
-
-建議：
-
-1. 正常關卡開始時清空 wrongQuestions。
-2. 正常關卡答錯時加入 wrongQuestions。
-3. 錯題練習使用 wrongQuestions 產生 currentQuestions。
-4. 錯題練習結束後不要更新星星。
-5. 錯題練習結束後可以保留原 wrongQuestions，讓學生可以再練一次。
-
-==================================================
-十、重新挑戰按鈕
-==================================================
-
-請確認 retryLevelButton 的功能。
-
-點擊重新挑戰時：
-
-1. 使用 currentLevel 重新開始原本關卡。
-2. isWrongPracticeMode = false。
-3. wrongQuestions = []。
-4. 題目重新隨機。
-5. 星星與進度照正常關卡計算。
-
-==================================================
-十一、回到關卡選擇
-==================================================
-
-請確認 backToLevelsButton。
-
-點擊後：
-
-1. 隱藏 resultSection。
-2. 隱藏 gameSection。
-3. 顯示 levelSection。
-4. isWrongPracticeMode = false。
-5. 重新 renderLevelList()。
-6. 更新星星總數進度條。
-
-==================================================
-十二、CSS 樣式
-==================================================
-
-請在 style.css 加入錯題列表樣式：
-
-.wrong-list-box {
-  margin-top: 18px;
-  padding: 16px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.25);
-}
-
-.wrong-list-box h3 {
-  margin-bottom: 12px;
-  color: #ffffff;
-}
-
-.wrong-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 8px 0;
-  padding: 10px 12px;
-  border-radius: 12px;
+.game-status-bar {
+  width: min(520px, 92%);
+  margin: 18px auto 10px;
+  padding: 12px 16px;
+  border-radius: 999px;
   background: rgba(255, 255, 255, 0.16);
-  color: #ffffff;
-  font-weight: bold;
-}
-
-.wrong-number {
-  opacity: 0.8;
-}
-
-.wrong-chinese {
-  min-width: 80px;
-}
-
-.wrong-answer {
-  color: #ffd166;
-}
-
-.no-wrong-text {
-  color: #ffffff;
-  font-weight: bold;
-}
-
-.result-buttons {
+  border: 1px solid rgba(255, 255, 255, 0.24);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 18px;
 }
 
-#wrongPracticeButton {
-  background: #ffd166;
-  color: #2b2100;
+.heart-display {
+  font-size: 1.45rem;
+  letter-spacing: 3px;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
 }
 
-#wrongPracticeButton.disabled,
-#wrongPracticeButton:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.timer-display {
+  min-width: 78px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.22);
+  color: #ffffff;
+  font-size: 1.25rem;
+  font-weight: 900;
+  text-align: center;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.45);
 }
 
-請注意：
+.timer-warning {
+  background: rgba(255, 71, 87, 0.9);
+  color: #ffffff;
+  animation: timerPulse 0.7s infinite alternate;
+}
 
-1. 錯題列表文字要看得清楚。
-2. 英文答案可以用醒目的顏色。
-3. 手機版不要跑版。
-4. 按鈕文字一定要清楚。
+@keyframes timerPulse {
+  from {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(255, 71, 87, 0);
+  }
 
-==================================================
-十三、測試需求
-==================================================
+  to {
+    transform: scale(1.06);
+    box-shadow: 0 0 16px rgba(255, 71, 87, 0.8);
+  }
+}
 
-請幫我測試以下情況：
+@media (max-width: 600px) {
+  .game-status-bar {
+    width: 94%;
+    border-radius: 20px;
+    flex-direction: column;
+  }
 
-1. 正常完成一關後，結算畫面會出現。
-2. 答錯 2 題時，錯題列表顯示 2 題。
-3. 錯題列表有中文和英文答案。
-4. 點「錯題練習」後，只出現剛剛答錯的題目。
-5. 錯題練習顯示剩餘錯題數。
-6. 錯題練習顯示目前題目熟練度。
-7. 答對一次，熟練度從 0/2 變成 1/2。
-8. 答錯時，熟練度歸 0。
-9. 連續答對 2 次，該題從錯題練習移除。
-10. 全部錯題都熟練後，顯示「錯題練習完成」。
-11. 錯題練習不會更新星星。
-12. 錯題練習不會解鎖下一關。
-13. 沒有錯題時，顯示「太棒了，沒有錯題！」。
-14. 沒有錯題時，錯題練習按鈕不能點。
-15. 重新挑戰會重新開始原關卡。
-16. 回到關卡選擇後，星星總數進度條正常。
-17. 發音功能在錯題練習時也可以正常使用。
+  .heart-display {
+    font-size: 1.35rem;
+  }
 
-==================================================
-十四、不要做的事情
-==================================================
+  .timer-display {
+    font-size: 1.15rem;
+  }
+}
+
+二十一、結算畫面補充顯示
+
+如果 resultSection 裡有空間，請加入：
+
+<p id="resultStatusText"></p>
+
+finishLevel() 裡更新：
+
+正常完成：
+
+resultStatusText.textContent = \`剩餘愛心：\${currentHearts}/\${heartLimit}，剩餘時間：\${formatTime(remainingTime)}\`;
+
+愛心用完：
+
+resultStatusText.textContent = "失敗原因：愛心用完";
+
+時間到：
+
+resultStatusText.textContent = "失敗原因：時間到了";
+
+二十二、測試需求
+
+請完成後測試：
+
+1. 點第 1 關後，顯示 3 顆愛心。
+2. 點第 1 關後，時間從 02:00 開始倒數。
+3. 答對不扣愛心。
+4. 答錯扣 1 顆愛心。
+5. 答錯 3 次後，愛心變 0，關卡失敗。
+6. 愛心歸 0 後，不能繼續答題。
+7. 愛心歸 0 後，結算畫面顯示挑戰失敗。
+8. 愛心歸 0 後，不給星星。
+9. 愛心歸 0 後，不解鎖下一關。
+10. 時間到後，關卡失敗。
+11. 時間到後，不給星星。
+12. 時間到後，不解鎖下一關。
+13. 完成所有題目後，時間停止。
+14. 完成所有題目後，依照原本答對率給星星。
+15. 回到關卡頁後，倒數停止。
+16. 重新挑戰時，愛心與時間重設。
+17. 錯題練習時也不會破壞星星進度。
+18. 手機版愛心與時間顯示不跑版。
+19. 發音功能仍正常。
+20. 打字音效仍正常。
+21. 星星總數進度條仍正常。
+
+二十三、不要做的事情
 
 1. 不要重建整個專案。
-2. 不要刪除發音功能。
-3. 不要刪除星星總數進度條。
-4. 不要刪除清除進度功能。
-5. 不要改變 words.json 格式。
-6. 不要改變 levels.json 格式。
-7. 不要建立新的 HTML 關卡頁。
-8. 不要建立新的 JS 關卡檔。
-9. 不要把錯題另外存成新的 JSON。
-10. 不要把錯題存到 Google Sheet。
-11. 不要把中文轉成 Unicode escape。
-12. 不要讓中文亂碼。
+2. 不要刪除原本答題功能。
+3. 不要刪除發音功能。
+4. 不要刪除打字音效。
+5. 不要刪除錯題練習。
+6. 不要刪除排除障礙。
+7. 不要刪除星星總數進度條。
+8. 不要修改 words.json 格式。
+9. 不要修改 levels.json 格式。
+10. 不要改變星星評分規則。
+11. 不要讓錯題練習更新星星。
+12. 不要讓時間到還能通關。
+13. 不要讓愛心歸 0 還能通關。
+14. 不要把中文轉成 Unicode escape。
+15. 不要讓中文亂碼。
 
-==================================================
-十五、完成後請回報
-==================================================
+完成後請回報：
 
-完成後請告訴我：
-
-1. 修改了哪些檔案。
-2. 新增了哪些結算畫面內容。
-3. 錯題資料存在哪個變數。
-4. 錯題練習按鈕 id 是什麼。
-5. 錯題練習如何開始。
-6. 錯題練習為什麼不會影響星星。
-7. 沒有錯題時畫面怎麼顯示。
-8. 連續答對2次的邏輯是否正常。
-
----
-
-## 完成後畫面流程
-
-玩家完成一關
-↓
-進入結算畫面
-↓
-顯示答對、答錯、答對率、星星
-↓
-如果有錯題，顯示錯題列表
-↓
-點「錯題練習」
-↓
-只練習剛剛答錯的題目
-↓
-每題要連續答對2次
-↓
-答對一次：熟練度 +1
-↓
-答錯：熟練度歸 0
-↓
-熟練度達到2/2：該題移除
-↓
-全部錯題都熟練
-↓
-顯示「錯題練習完成」
-↓
-不更新星星、不解鎖關卡
-
----
-
-## 如果錯題練習沒有出現題目，再貼這段修正
-
-請幫我檢查為什麼錯題練習沒有題目。
-
-請檢查：
-
-1. submitAnswer() 答錯時是否有把 currentQuestion 加入 wrongQuestions。
-2. wrongQuestions 是否在正常關卡開始時才清空。
-3. wrongQuestions 是否沒有被 finishLevel() 清空。
-4. wrongPracticeButton 是否有 click 事件。
-5. startWrongPractice() 是否有把 currentQuestions 設定成 wrongQuestions。
-6. currentQuestionIndex 是否有重設成 0。
-7. showQuestion() 是否可以正常顯示 currentQuestions[0]。
-8. 錯題練習模式 isWrongPracticeMode 是否有設成 true。
-9. resultSection 是否有隱藏。
-10. gameSection 是否有顯示。
-
-請不要重構整個專案，只修正錯題練習沒有題目的問題。`,
+1. 只修改了第十步嗎？
+2. 第十步標題是否已改成「第十步：加入愛心系統與時間倒數系統」？
+3. 第十步的程式碼區塊是否已換成上面的完整內容？
+4. 其他步驟是否完全沒有改動？
+5. 複製按鈕是否仍然正常？`,
         images: [
             {
                 title: "錯題練習畫面範例",
